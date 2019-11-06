@@ -1,5 +1,5 @@
 database:
   address: localhost
-  port: 8000
+  port: 3306
   username: test
   password: testPass
