@@ -9,17 +9,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @SpringBootApplication
 @EnableConfigurationProperties
-public class SinuApplication implements CommandLineRunner {
-
-	@Autowired
-	private DatabaseConfig database;
+public class SinuApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SinuApplication.class, args);
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		System.out.println(database);
 	}
 }
