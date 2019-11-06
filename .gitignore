@@ -33,3 +33,6 @@ build/
 
 ### Maven ###
 .mvn
+
+### Metadata ###
+.metadata
