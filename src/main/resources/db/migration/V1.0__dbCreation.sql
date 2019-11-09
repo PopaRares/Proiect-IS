@@ -14,7 +14,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema SINU
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `SINU` DEFAULT CHARACTER SET big5 ;
 USE `SINU` ;
 
 -- -----------------------------------------------------
@@ -30,8 +29,13 @@ CREATE TABLE IF NOT EXISTS `SINU`.`users` (
   `role` ENUM('STUDENT', 'PROFESSOR', 'ADMIN') NULL,
   `group_id` INT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE)
+  CONSTRAINT `group_id`
+    FOREIGN KEY (`group_id`)
+    REFERENCES `SINU`.`group` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) ,
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC) )
 ENGINE = InnoDB;
 
 
@@ -39,7 +43,7 @@ ENGINE = InnoDB;
 -- Table `SINU`.`group`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SINU`.`group` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT AUTO_INCREMENT,
   `series_id` INT NULL,
   `year` INT NULL,
   `faculty` VARCHAR(45) NULL,
@@ -61,12 +65,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `SINU`.`subjects_professors`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `SINU`.`subjects_professors` (
+CREATE TABLE IF NOT EXISTS `SINU`.`subject_professors` (
   `subject_id` INT NOT NULL,
   `professor_id` INT NOT NULL,
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
-  INDEX `professor_id_idx` (`professor_id` ASC) VISIBLE,
+  INDEX `professor_id_idx` (`professor_id` ASC) ,
   CONSTRAINT `subject_id`
     FOREIGN KEY (`subject_id`)
     REFERENCES `SINU`.`subject` (`id`)
@@ -89,9 +93,12 @@ CREATE TABLE IF NOT EXISTS `SINU`.`grades` (
   `subject_professor_id` INT NOT NULL,
   `student_id` INT NOT NULL,
   `date` DATE NULL,
+  `semester` ENUM('FIRST', 'SECOND') NOT NULL,
+  `year` INT NOT NULL,
+
   PRIMARY KEY (`id`),
-  INDEX `subject_professor_id_idx` (`subject_professor_id` ASC) VISIBLE,
-  INDEX `student_id_idx` (`student_id` ASC) VISIBLE,
+  INDEX `subject_professor_id_idx` (`subject_professor_id` ASC) ,
+  INDEX `student_id_idx` (`student_id` ASC) ,
   CONSTRAINT `subject_professor_id`
     FOREIGN KEY (`subject_professor_id`)
     REFERENCES `SINU`.`subjects_professors` (`id`)
@@ -104,24 +111,25 @@ CREATE TABLE IF NOT EXISTS `SINU`.`grades` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
--- Table `SINU`.`timetable`
+-- Table `SINU`.`schedule`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `SINU`.`timetable` (
-  `subject_id` INT NOT NULL,
-  `group_id` INT NOT NULL,
-  `time` DATETIME NULL,
+CREATE TABLE IF NOT EXISTS `SINU`.`schedule` (
+  `subject_prof_id` INT NOT NULL,
+  `group` INT NOT NULL,
+  `day` ENUM ('MONDAY', 'TUESDAY', 'WEDNESDAY','THURSDAY', 'FRIDAY'),
+  `time` TIME NULL,
+  `parity` ENUM('ODD', 'EVEN', 'BOTH'),
   `location` VARCHAR(45) NULL,
-  PRIMARY KEY (`subject_id`, `group_id`),
-  INDEX `group_id_idx` (`group_id` ASC) VISIBLE,
-  CONSTRAINT `subject_id`
-    FOREIGN KEY (`subject_id`)
+  PRIMARY KEY (`subject_prof_id`, `group`),
+  INDEX `group_id_idx` (`group` ASC) ,
+  CONSTRAINT `subject_prof_id`
+    FOREIGN KEY (`subject_prof_id`)
     REFERENCES `SINU`.`subjects_professors` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `group_id`
-    FOREIGN KEY (`group_id`)
+  CONSTRAINT `group`
+    FOREIGN KEY (`group`)
     REFERENCES `SINU`.`group` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

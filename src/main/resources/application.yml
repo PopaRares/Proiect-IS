@@ -1,5 +1,16 @@
 database:
   address: localhost
   port: 3306
-  username: test
-  password: testPass
+  username: root
+  password:
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/SINU
+    username: sinu
+    password: 12345678
+  jpa:
+    show-sql: true
+  flyway:
+    enabled: true
+    validate-on-migrate: true
