@@ -25,4 +25,3 @@ INSERT into schedule(subject_prof_id, `group`, day, time, parity, location) VALU
 INSERT into schedule(subject_prof_id, `group`, day, time, parity, location) VALUES (9 , 7, 'THURSDAY', '08:00:00', 'BOTH', 'D21');
 INSERT into schedule(subject_prof_id, `group`, day, time, parity, location) VALUES (11 , 7, 'THURSDAY', '10:00:00', 'BOTH', 'D21');
 INSERT into schedule(subject_prof_id, `group`, day, time, parity, location) VALUES (13 , 7, 'THURSDAY', '12:00:00', 'BOTH', 'D21');
-INSERT into schedule(subject_prof_id, `group`, day, time, parity, location) VALUES (9 , 7, 'FRIDAY', '012:00:00', 'BOTH', '101');

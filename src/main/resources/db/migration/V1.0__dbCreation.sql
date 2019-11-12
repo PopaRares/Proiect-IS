@@ -63,7 +63,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SINU`.`subjects_professors`
+-- Table `SINU`.`subject_professors`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SINU`.`subject_professors` (
   `subject_id` INT NOT NULL,
@@ -122,10 +122,10 @@ CREATE TABLE IF NOT EXISTS `SINU`.`schedule` (
   `parity` ENUM('ODD', 'EVEN', 'BOTH'),
   `location` VARCHAR(45) NULL,
   PRIMARY KEY (`subject_prof_id`, `group`),
-  INDEX `group_id_idx` (`group` ASC) ,
+  INDEX `group_idx` (`group` ASC) ,
   CONSTRAINT `subject_prof_id`
     FOREIGN KEY (`subject_prof_id`)
-    REFERENCES `SINU`.`subjects_professors` (`id`)
+    REFERENCES `SINU`.`subject_professors` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `group`
