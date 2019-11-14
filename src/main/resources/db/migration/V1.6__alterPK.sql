@@ -1,0 +1,1 @@
+ALTER TABLE `SINU`.`users` DROP PRIMARY KEY, ADD PRIMARY KEY(`id`, `username`, `email`);
