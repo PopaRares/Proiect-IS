@@ -1,6 +1,5 @@
 package com.IS.SINU.config;
 
-import com.IS.SINU.security.jwt.JwtSecurityConfigurer;
 import com.IS.SINU.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,35 +30,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     protected void configure(HttpSecurity http) throws Exception {
-       /* http
-            .httpBasic().disable()
-            .csrf().disable()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-                .authorizeRequests()
-                .antMatchers("/auth/signin").permitAll()
-                .antMatchers("/test").permitAll()
-                .anyRequest().authenticated()
-            .and()
-            .apply(new JwtSecurityConfigurer(jwtTokenProvider));*/
         http
                 .authorizeRequests()
-                .antMatchers("test").permitAll()
+                .antMatchers("/test").permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .apply(new JwtSecurityConfigurer(jwtTokenProvider))
                 .and()
                 .formLogin()
                 .loginPage("/auth/signin")
                 .permitAll()
                 .and()
                 .logout()
-                .permitAll();
+                .permitAll()
+                .and()
+                .apply(new JwtSecurityConfigurer(jwtTokenProvider));
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 }

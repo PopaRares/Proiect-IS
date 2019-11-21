@@ -1,5 +1,8 @@
-package com.IS.SINU.security.jwt;
+package com.IS.SINU.config;
 
+import com.IS.SINU.security.jwt.JwtAuthenticationEntryPoint;
+import com.IS.SINU.security.jwt.JwtTokenFilter;
+import com.IS.SINU.security.jwt.JwtTokenProvider;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.DefaultSecurityFilterChain;
