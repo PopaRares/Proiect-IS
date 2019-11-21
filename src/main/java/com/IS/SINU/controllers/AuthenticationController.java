@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,21 +33,19 @@ public class AuthenticationController {
     @RequestMapping("/signin")
     public ResponseEntity signin(@RequestBody AuthenticationRequest data){
        try {
-           BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
            String username = data.getUsername();
-           System.out.println(username + "--------------AuthController");
-           System.out.println(this.users.findByUsername(username));
-           //authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
-           String token = jwtTokenProvider.createToken(username, this.users.findByUsername(username).getRoles());
+           User user = this.users.findByUsername(username);
+
+           authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
+
+           String token = jwtTokenProvider.createToken(username, user.getRoles());
 
            Map<Object, Object> model = new HashMap<>();
-           model.put("username", username);
+           model.put("role", user.getRole());
            model.put("token", token);
 
-           return ok(token);
-       } catch (Exception e) {
-           e.printStackTrace();
-
+           return ok(model);
+       } catch (Exception e){
            return new ResponseEntity("Unauthorized", HttpStatus.UNAUTHORIZED);
        }
     }

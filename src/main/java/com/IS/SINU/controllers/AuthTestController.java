@@ -11,7 +11,6 @@ public class AuthTestController {
         try {
             return "You can see this because you are authenticated.";
         } catch (Exception e){
-            System.out.println("E------------------------------------------");
             return "UNAUTHORIZED";
         }
     }

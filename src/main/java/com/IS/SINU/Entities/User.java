@@ -11,7 +11,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @Entity
-@Table(name="`User`")
+@Table(name="`user`")
 public class User {
 
     @Id
