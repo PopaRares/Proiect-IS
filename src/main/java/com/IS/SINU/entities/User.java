@@ -1,14 +1,8 @@
-package com.IS.SINU.Entities;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+package com.IS.SINU.entities;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import static java.util.stream.Collectors.toList;
 
 @Entity
 @Table(name="`user`")

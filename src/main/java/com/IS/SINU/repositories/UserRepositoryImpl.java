@@ -1,21 +1,13 @@
-package com.IS.SINU.Repositories;
+package com.IS.SINU.repositories;
 
-import com.IS.SINU.Entities.User;
+import com.IS.SINU.entities.User;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Transactional

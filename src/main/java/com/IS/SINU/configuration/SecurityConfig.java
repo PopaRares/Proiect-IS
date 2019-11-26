@@ -1,5 +1,6 @@
-package com.IS.SINU.config;
+package com.IS.SINU.configuration;
 
+import com.IS.SINU.config.JwtSecurityConfigurer;
 import com.IS.SINU.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

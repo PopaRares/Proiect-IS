@@ -1,13 +1,11 @@
 package com.IS.SINU.service;
 
-import com.IS.SINU.Entities.User;
-import com.IS.SINU.Repositories.UserRepository;
-import com.IS.SINU.Repositories.UserRepositoryImpl;
+import com.IS.SINU.entities.User;
+import com.IS.SINU.repositories.UserRepository;
+import com.IS.SINU.repositories.UserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
 
 @Service
 public class UserServiceImpl implements UserService{

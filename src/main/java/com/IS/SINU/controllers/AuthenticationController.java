@@ -1,7 +1,8 @@
 package com.IS.SINU.controllers;
 
-import com.IS.SINU.Entities.User;
-import com.IS.SINU.Repositories.UserRepository;
+import com.IS.SINU.entities.AuthenticationRequest;
+import com.IS.SINU.entities.User;
+import com.IS.SINU.repositories.UserRepository;
 //import com.IS.SINU.Repositories.UserRepositoryImpl;
 import com.IS.SINU.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -46,7 +46,7 @@ public class AuthenticationController {
 
            return ok(model);
        } catch (Exception e){
-           return new ResponseEntity("Unauthorized", HttpStatus.UNAUTHORIZED);
+           return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
        }
     }
 }

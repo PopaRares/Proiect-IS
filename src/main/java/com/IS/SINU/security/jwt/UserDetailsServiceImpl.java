@@ -1,7 +1,7 @@
 package com.IS.SINU.security.jwt;
 
-import com.IS.SINU.Entities.User;
-import com.IS.SINU.Repositories.UserRepository;
+import com.IS.SINU.entities.User;
+import com.IS.SINU.repositories.UserRepository;
 //import com.IS.SINU.Repositories.UserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,7 +9,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
