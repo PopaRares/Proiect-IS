@@ -37,15 +37,15 @@ public class AuthenticationController {
        try {
            String username = data.getUsername();
            User user = this.users.findByUsername(username);
+           String role = user.getRole();
 
            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
 
-           ArrayList<String> roleList = new ArrayList<>();
-           roleList.add(user.getRole());
-           String token = jwtTokenProvider.createToken(username, roleList);
+           String token = jwtTokenProvider.createToken(username, role);
 
            Map<Object, Object> model = new HashMap<>();
-           model.put("role", user.getRole());
+           model.put("username", username);
+           model.put("role", role);
            model.put("token", token);
 
            return ok(model);
