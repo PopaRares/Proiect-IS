@@ -1,0 +1,1 @@
+UPDATE `users` SET password = "$2a$10$Plb.TdYza5k0GR/SfzAWcuWLZRwBGeiEei1SQQT/Dgaxjg2/ynaeG" WHERE password = "12345"
