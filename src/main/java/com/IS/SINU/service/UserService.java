@@ -1,6 +1,6 @@
 package com.IS.SINU.service;
 
-import com.IS.SINU.entities.User;
+import com.IS.SINU.entities.dao.User;
 
 public interface UserService {
     void save(User user);

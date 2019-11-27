@@ -1,7 +1,7 @@
 package com.IS.SINU.controllers;
 
 import com.IS.SINU.entities.AuthenticationRequest;
-import com.IS.SINU.entities.User;
+import com.IS.SINU.entities.dao.User;
 import com.IS.SINU.repositories.UserRepository;
 //import com.IS.SINU.Repositories.UserRepositoryImpl;
 import com.IS.SINU.security.jwt.JwtTokenProvider;
@@ -12,7 +12,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -38,7 +40,9 @@ public class AuthenticationController {
 
            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
 
-           String token = jwtTokenProvider.createToken(username, user.getRoles());
+           ArrayList<String> roleList = new ArrayList<>();
+           roleList.add(user.getRole());
+           String token = jwtTokenProvider.createToken(username, roleList);
 
            Map<Object, Object> model = new HashMap<>();
            model.put("role", user.getRole());

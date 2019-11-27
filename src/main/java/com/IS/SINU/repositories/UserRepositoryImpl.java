@@ -1,7 +1,6 @@
 package com.IS.SINU.repositories;
 
-import com.IS.SINU.entities.User;
-
+import com.IS.SINU.entities.dao.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -22,6 +21,5 @@ public class UserRepositoryImpl {
         entityManager.merge(user);
         entityManager.getTransaction().commit();
         entityManager.close();
-
     }
 }

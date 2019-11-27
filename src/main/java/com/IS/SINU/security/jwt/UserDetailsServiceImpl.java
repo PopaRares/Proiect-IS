@@ -1,6 +1,6 @@
 package com.IS.SINU.security.jwt;
 
-import com.IS.SINU.entities.User;
+import com.IS.SINU.entities.dao.User;
 import com.IS.SINU.repositories.UserRepository;
 //import com.IS.SINU.Repositories.UserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;

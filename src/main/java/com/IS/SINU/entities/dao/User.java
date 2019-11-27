@@ -33,6 +33,10 @@ public class User {
 
     @Column(name = "group_id")
     private int groupID;//temporary
+
+    public String getRole() {
+        return role.name();
+    }
 }
 
 enum Role {

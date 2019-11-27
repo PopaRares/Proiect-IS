@@ -32,7 +32,7 @@ public class JwtTokenProvider {
         secretKey = Keys.hmacShaKeyFor(Hashing.sha256().hashString(jwtProperties.getPassword(), StandardCharsets.UTF_8).toString().getBytes());
     }
 
-    public String createToken(String username, List<String> roles) {
+    public String createToken(String username, List<String> roles) {//why do the roles need to be a list???
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("roles", roles);
 
