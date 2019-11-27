@@ -1,9 +1,7 @@
-package com.IS.SINU.service;
+package com.IS.SINU.services;
 
 import com.IS.SINU.entities.dao.User;
 
 public interface UserService {
     void save(User user);
-
-    User findByUsername(String username);
 }
