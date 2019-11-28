@@ -31,19 +31,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/test").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/auth/signin")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .and()
-                .apply(new JwtSecurityConfigurer(jwtTokenProvider));
+        http.authorizeRequests()
+                .antMatchers("**")
+                .permitAll();
+//                .authorizeRequests()
+//                .antMatchers("/test").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/auth/signin")
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .permitAll()
+//                .and()
+//                .apply(new JwtSecurityConfigurer(jwtTokenProvider));
     }
 
     @Autowired

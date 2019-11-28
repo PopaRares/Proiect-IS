@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuthTestController {
-    @RequestMapping({ "/authenticated" })
+    @RequestMapping("/authenticated")
     public String authRoute() {
         try {
             return "You can see this because you are authenticated.";
