@@ -1,7 +1,8 @@
 package com.IS.SINU.controllers;
 
-import com.IS.SINU.Entities.User;
-import com.IS.SINU.Repositories.UserRepository;
+import com.IS.SINU.entities.AuthenticationRequest;
+import com.IS.SINU.entities.dao.User;
+import com.IS.SINU.repositories.UserRepository;
 //import com.IS.SINU.Repositories.UserRepositoryImpl;
 import com.IS.SINU.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -30,23 +33,28 @@ public class AuthenticationController {
     @Autowired
     UserRepository users;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
     @RequestMapping("/signin")
     public ResponseEntity signin(@RequestBody AuthenticationRequest data){
-       try {
-           String username = data.getUsername();
-           User user = this.users.findByUsername(username);
+        try {
+            String username = data.getUsername();
+            User user = this.users.findByUsername(username);
+            String role = user.getRole();
 
-           authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
 
-           String token = jwtTokenProvider.createToken(username, user.getRoles());
+            String token = jwtTokenProvider.createToken(username, role);
 
-           Map<Object, Object> model = new HashMap<>();
-           model.put("role", user.getRole());
-           model.put("token", token);
+            Map<Object, Object> model = new HashMap<>();
+            model.put("username", username);
+            model.put("role", role);
+            model.put("token", token);
 
-           return ok(model);
-       } catch (Exception e){
-           return new ResponseEntity("Unauthorized", HttpStatus.UNAUTHORIZED);
-       }
+            return ok(model);
+        } catch (Exception e){
+            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
+        }
     }
 }

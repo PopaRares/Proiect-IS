@@ -1,15 +1,11 @@
 package com.IS.SINU.security.jwt;
 
-import com.IS.SINU.Entities.User;
 import com.google.common.hash.Hashing;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
@@ -18,8 +14,6 @@ import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -38,9 +32,9 @@ public class JwtTokenProvider {
         secretKey = Keys.hmacShaKeyFor(Hashing.sha256().hashString(jwtProperties.getPassword(), StandardCharsets.UTF_8).toString().getBytes());
     }
 
-    public String createToken(String username, List<String> roles) {
+    public String createToken(String username, String role) {
         Claims claims = Jwts.claims().setSubject(username);
-        claims.put("roles", roles);
+        claims.put("roles", role);
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + jwtProperties.getValidityInMs());
@@ -66,7 +60,7 @@ public class JwtTokenProvider {
     }
 
     public String getUsername(String token) {
-            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
     public String resolveToken(HttpServletRequest req) {
@@ -83,11 +77,8 @@ public class JwtTokenProvider {
         try{
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
 
-            if (claims.getBody().getExpiration().before(new Date())) {
-                return false;
-            }
+            return !claims.getBody().getExpiration().before(new Date());//returns true when token is expired
 
-            return true;
         } catch (JwtException | IllegalArgumentException e) {
             throw new InvalidJwtAuthenticationException("Expired or invalid Jwt token");
         }

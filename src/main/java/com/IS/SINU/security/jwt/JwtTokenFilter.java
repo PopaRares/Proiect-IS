@@ -26,7 +26,6 @@ public class JwtTokenFilter extends GenericFilterBean {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         try {
             String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
-
             if (token != null && jwtTokenProvider.getAuthentication(token) != null) {
                 Authentication auth = jwtTokenProvider.getAuthentication(token);
 
@@ -37,7 +36,6 @@ public class JwtTokenFilter extends GenericFilterBean {
             chain.doFilter(req, res);
         } catch (Exception E) {
             HttpServletResponse response = (HttpServletResponse) res;
-
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.getWriter().print("Forbidden!");
         }
