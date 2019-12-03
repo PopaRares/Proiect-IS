@@ -44,7 +44,6 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity signin(@RequestBody AuthenticationRequest data){
-        System.out.println("AJUNGE IN SIGNIN");
         try {
             String username = data.getUsername();
             User user = this.users.findByUsername(username);

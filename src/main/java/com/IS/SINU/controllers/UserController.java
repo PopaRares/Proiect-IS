@@ -25,8 +25,6 @@ public class UserController {//in progress
 
     @RequestMapping("/save")
     public ResponseEntity saveUser(@RequestBody User u) {
-        System.out.println("Request: ");
-        System.out.println(u);
         service.save(u);
         return ok(u);
     }
