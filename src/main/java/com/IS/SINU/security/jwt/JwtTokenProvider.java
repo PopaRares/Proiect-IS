@@ -50,14 +50,9 @@ public class JwtTokenProvider {
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
 
-        return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public Authentication getAuthentication(String username, String password) {
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-
-        return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
-    }
 
     public String getUsername(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
@@ -67,7 +62,10 @@ public class JwtTokenProvider {
         String bearerToken = req.getHeader("Authorization");
 
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7, bearerToken.length());
+
+            String token = bearerToken.substring(7, bearerToken.length());
+
+            return token;
         }
 
         return null;

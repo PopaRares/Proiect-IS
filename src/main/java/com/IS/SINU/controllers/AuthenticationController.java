@@ -21,7 +21,6 @@ import java.util.Map;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@RequestMapping("/auth")
 public class AuthenticationController {
 
     @Autowired
@@ -33,11 +32,19 @@ public class AuthenticationController {
     @Autowired
     UserRepository users;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    @GetMapping("/authenticate")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void authenticate() {
+        // we don't have to do anything here
+        // this is just a secure endpoint and the JWTFilter
+        // validates the token
+        // this service is called at startup of the app to check
+        // if the jwt token is still valid
+    }
 
-    @RequestMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity signin(@RequestBody AuthenticationRequest data){
+        System.out.println("AJUNGE IN SIGNIN");
         try {
             String username = data.getUsername();
             User user = this.users.findByUsername(username);
@@ -52,7 +59,7 @@ public class AuthenticationController {
             model.put("role", role);
             model.put("token", token);
 
-            return ok(model);
+            return ResponseEntity.ok(model);
         } catch (Exception e){
             return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
         }

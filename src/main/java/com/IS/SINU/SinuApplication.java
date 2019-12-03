@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableConfigurationProperties
 @EnableJpaRepositories("com.IS.SINU.repositories")
 public class SinuApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(SinuApplication.class, args);
 	}
