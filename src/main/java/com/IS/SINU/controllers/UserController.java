@@ -1,6 +1,5 @@
 package com.IS.SINU.controllers;
 
-import com.IS.SINU.entities.dao.TestObj;
 import com.IS.SINU.entities.dao.User;
 import com.IS.SINU.repositories.UserRepository;
 import com.IS.SINU.services.UserService;
@@ -25,7 +24,10 @@ public class UserController {//in progress
 
     @RequestMapping("/save")
     public ResponseEntity saveUser(@RequestBody User u) {
+        System.out.println("About to save");
+        System.out.println(u);
         service.save(u);
+        System.out.println(ok(u));
         return ok(u);
     }
 }

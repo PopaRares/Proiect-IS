@@ -33,33 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    /*protected void configure(HttpSecurity http) throws Exception {
-        /*http.csrf().disable()
-                .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/auth/signin")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .and()
-                .apply(new JwtSecurityConfigurer(jwtTokenProvider));*/
-        /*http.authorizeRequests()
-                .antMatchers("**")
-                .permitAll();*/
-        /*http.authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .apply(new JwtSecurityConfigurer(jwtTokenProvider));
-    }*/
     protected void configure(HttpSecurity http) throws Exception {
         JwtTokenFilter jwtFilter = new JwtTokenFilter(this.jwtTokenProvider);
-
-        // @formatter:off
         http
                 .csrf().disable()
                 .cors()
@@ -67,14 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                //.httpBasic() // optional, if you want to access
-                //  .and()     // the services from a browser
                 .authorizeRequests()
                 .antMatchers("/signup", "/login", "/public").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        // @formatter:on
     }
 
     @Autowired
