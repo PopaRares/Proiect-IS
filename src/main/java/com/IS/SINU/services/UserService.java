@@ -1,7 +1,9 @@
 package com.IS.SINU.services;
 
 import com.IS.SINU.entities.dao.User;
+import com.IS.SINU.entities.dto.UserDto;
+import com.IS.SINU.exceptions.EmailExistsException;
 
 public interface UserService {
-    void save(User user);
+    User registerNewUserAccount(UserDto accountDto) throws EmailExistsException;
 }

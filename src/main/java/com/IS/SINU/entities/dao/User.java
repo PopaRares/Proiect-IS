@@ -1,12 +1,16 @@
 package com.IS.SINU.entities.dao;
 
+import com.IS.SINU.entities.Role;
+import com.IS.SINU.entities.dto.UserDto;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
 @Data
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY )
@@ -37,10 +41,14 @@ public class User {
     public String getRole() {
         return role.name();
     }
+
+    public User(UserDto u){
+        this.firstName = u.getFirstName();
+        this.lastName = u.getLastName();
+        this.email = u.getEmail();
+        this.username = u.getUsername();
+        this.role = u.getRole();
+        this.groupID = u.getGroupID();
+    }
 }
 
-enum Role {
-    STUDENT,
-    PROFESSOR,
-    ADMIN
-}
