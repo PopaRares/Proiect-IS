@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Data
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY )
     private Long id;
 
     @Column(name = "first_name")
@@ -33,6 +33,10 @@ public class User {
 
     @Column(name = "group_id")
     private int groupID;//temporary
+
+    public String getRole() {
+        return role.name();
+    }
 }
 
 enum Role {
