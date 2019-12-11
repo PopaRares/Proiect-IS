@@ -35,9 +35,9 @@ public class UserDto {
 
     @NotNull
     @NotEmpty
-    private Role role;
+    private String role;
 
-    @NotNull
-    @NotEmpty
-    private int groupID;//temporary
+//    @NotNull
+//    @NotEmpty
+//    private int groupID;//temporary
 }

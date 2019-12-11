@@ -31,7 +31,7 @@ public class UserController {//in progress
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ModelAndView registerUserAccount (@RequestBody UserDto accountDto, BindingResult result, WebRequest request, Errors errors) {
+    public User registerUserAccount (@RequestBody @Valid UserDto accountDto, BindingResult result) {
         User registered = new User();
         if (!result.hasErrors()) {
             registered = createUserAccount(accountDto, result);
@@ -41,10 +41,10 @@ public class UserController {//in progress
         }
         //add more rejected scenarios
         if (result.hasErrors()) {
-            return new ModelAndView("registration", "user", accountDto);
+            return null;
         }
         else {
-            return new ModelAndView("successRegister", "user", accountDto);
+            return registered;
         }
     }
 

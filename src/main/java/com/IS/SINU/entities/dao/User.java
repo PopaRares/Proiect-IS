@@ -47,8 +47,8 @@ public class User {
         this.lastName = u.getLastName();
         this.email = u.getEmail();
         this.username = u.getUsername();
-        this.role = u.getRole();
-        this.groupID = u.getGroupID();
+        this.role = Role.valueOf(u.getRole());
+        this.groupID = 10;
     }
 }
 
