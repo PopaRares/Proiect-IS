@@ -23,16 +23,21 @@ public class JwtTokenFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         try {
-            String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
-            if (token != null && jwtTokenProvider.getAuthentication(token) != null) {
-                Authentication auth = jwtTokenProvider.getAuthentication(token);
+            HttpServletResponse response = (HttpServletResponse) res;
+            HttpServletRequest request = (HttpServletRequest) req;
+            if(!request.getRequestURL().toString().contains("/login")) {
+                String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
+                if (token != null && jwtTokenProvider.getAuthentication(token) != null) {
+                    Authentication auth = jwtTokenProvider.getAuthentication(token);
 
-                if (auth != null) {
-                    SecurityContextHolder.getContext().setAuthentication(auth);
+                    if (auth != null) {
+                        SecurityContextHolder.getContext().setAuthentication(auth);
+                    }
                 }
             }
             chain.doFilter(req, res);
         } catch (Exception E) {
+            System.out.println(E.getMessage());
             HttpServletResponse response = (HttpServletResponse) res;
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             System.out.println(E.getMessage());
