@@ -37,7 +37,6 @@ public class JwtTokenFilter extends GenericFilterBean {
             }
             chain.doFilter(req, res);
         } catch (Exception E) {
-            System.out.println(E.getMessage());
             HttpServletResponse response = (HttpServletResponse) res;
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             System.out.println(E.getMessage());
