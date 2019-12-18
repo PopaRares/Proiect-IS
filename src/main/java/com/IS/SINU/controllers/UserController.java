@@ -5,13 +5,14 @@ import com.IS.SINU.entities.dto.UserDto;
 import com.IS.SINU.exceptions.EmailExistsException;
 import com.IS.SINU.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.validation.Valid;
 
 
@@ -31,31 +32,9 @@ public class UserController {//in progress
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public User registerUserAccount (@RequestBody @Valid UserDto accountDto, BindingResult result) {
-        User registered = new User();
-        if (!result.hasErrors()) {
-            registered = createUserAccount(accountDto, result);
-        }
-        if (registered == null) {
-            result.rejectValue("email", "message.regError");
-        }
-        //add more rejected scenarios
-        if (result.hasErrors()) {
-            return null;
-        }
-        else {
-            return registered;
-        }
+    public ResponseEntity<User> registerUserAccount (@Valid @RequestBody UserDto regUser) throws EmailExistsException {
+        User user = service.registerNewUserAccount(regUser);
+        return ResponseEntity.ok(user);
     }
 
-    private User createUserAccount(UserDto accountDto, BindingResult result) {
-        User registered = null;
-        try {
-            registered = service.registerNewUserAccount(accountDto);
-        } catch (EmailExistsException e) {
-            return null;
-        }
-        //add more exceptions
-        return registered;
-    }
 }

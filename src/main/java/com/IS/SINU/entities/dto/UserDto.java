@@ -1,40 +1,35 @@
 package com.IS.SINU.entities.dto;
 
-import com.IS.SINU.entities.Role;
 import lombok.Data;
 import validators.PasswordMatches;
 import validators.ValidEmail;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Data
 @PasswordMatches
 public class UserDto {
-    @NotNull
-    @NotEmpty
+
+    @NotBlank
     private String firstName;
 
-    @NotNull
-    @NotEmpty
+    @NotBlank
     private String lastName;
 
     @ValidEmail
-    @NotNull
-    @NotEmpty
+    @NotBlank
     private String email;
 
-    @NotNull
-    @NotEmpty
+    @NotBlank
     private String username;
 
-    @NotNull
-    @NotEmpty
+    @NotBlank
+    @Size(min=8, message="Password must be at least 8 characters")
     private String password;
     private String matchingPassword;
 
-    @NotNull
-    @NotEmpty
+    @NotBlank
     private String role;
 
 //    @NotNull

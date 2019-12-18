@@ -14,18 +14,18 @@ import javax.transaction.Transactional;
 public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
+
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     @Transactional
     @Override
     public User registerNewUserAccount(UserDto accountDto) throws EmailExistsException {
         if (emailExist(accountDto.getEmail())) {
-            throw new EmailExistsException("There is an account with that email adress: "  + accountDto.getEmail());
+            throw new EmailExistsException(accountDto.getEmail());
         }
         User user = new User(accountDto);
         String password = bCryptPasswordEncoder.encode(accountDto.getPassword());
-        System.out.println(password);
-        user.setPassword("cartofi");
+        user.setPassword(password);
         userRepository.save(user);
         return user;
     }
