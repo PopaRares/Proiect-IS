@@ -10,6 +10,12 @@ spring:
     validate-on-migrate: true
   mail:
     host: smtp.gmail.com
-    username:
-    password:
+    username: SINU.pypk6u@gmail.com
+    password: Yg34SwKm
     port: 587
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+

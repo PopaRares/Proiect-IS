@@ -15,20 +15,20 @@ public class VerificationToken {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-//    private String token;
-//
-//    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-//    @JoinColumn(nullable = false, name = "id")
-//    private User user;
-//
-//    private Date expiryDate;
-//
-//    private Date calculateExpiryDate(int expiryTimeInMinutes) {
-//        Calendar cal = Calendar.getInstance();
-//        cal.setTime(new Timestamp(cal.getTime().getTime()));
-//        cal.add(Calendar.MINUTE, expiryTimeInMinutes);
-//        return new Date(cal.getTime().getTime());
-//    }
+    private String token;
+
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "ID")
+    private User user;
+
+    private Date expiryDate;
+
+    private Date calculateExpiryDate(int expiryTimeInMinutes) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Timestamp(cal.getTime().getTime()));
+        cal.add(Calendar.MINUTE, expiryTimeInMinutes);
+        return new Date(cal.getTime().getTime());
+    }
 
     // standard constructors, getters and setters
 }

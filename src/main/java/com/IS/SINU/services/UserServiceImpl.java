@@ -5,6 +5,7 @@ import com.IS.SINU.entities.dto.UserDto;
 import com.IS.SINU.exceptions.EmailExistsException;
 import com.IS.SINU.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,7 +31,6 @@ public class UserServiceImpl implements UserService{
         }
         User user = new User(accountDto);
         String password = bCryptPasswordEncoder.encode(accountDto.getPassword());
-        System.out.println(password.length());
         user.setPassword(password);
         userRepository.save(user);
 
@@ -44,12 +44,11 @@ public class UserServiceImpl implements UserService{
         return user != null;
     }
 
-    private void sendActivationEmail(String recipientAddress, String token) {
+    private void sendActivationEmail(String recipientAddress, String token) throws MailException {
         SimpleMailMessage email = new SimpleMailMessage();
-        System.out.println("lol");
         email.setTo(recipientAddress);
         email.setSubject("SINU Account Activation");
-        email.setText("TEST" + " rn" + "http://localhost:8080/user/activate" + token);
+        email.setText("http://localhost:8080/user/activate" + token);
         mailSender.send(email);
     }
 
