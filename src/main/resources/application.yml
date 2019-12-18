@@ -8,3 +8,8 @@ spring:
   flyway:
     enabled: true
     validate-on-migrate: true
+  mail:
+    host: smtp.gmail.com
+    username:
+    password:
+    port: 587

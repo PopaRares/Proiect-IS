@@ -13,8 +13,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class User {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY )
     private Long id;
+
+    @Column(name = "activated")
+    private boolean activated;
 
     @Column(name = "first_name")
     private String firstName;
@@ -49,6 +53,7 @@ public class User {
         this.username = u.getUsername();
         this.role = Role.valueOf(u.getRole());
         this.groupID = 10;
+        this.activated = false;
     }
 }
 
