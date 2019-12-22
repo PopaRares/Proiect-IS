@@ -1,9 +1,6 @@
 package com.IS.SINU.controllers;
 
-import com.IS.SINU.exceptions.EmailExistsException;
-import com.IS.SINU.exceptions.ExceptionContainer;
-import com.IS.SINU.exceptions.SINU_Exception;
-import com.IS.SINU.exceptions.UsernameExistsException;
+import com.IS.SINU.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -17,7 +14,7 @@ import java.util.Collections;
 public class UserExceptionHandler {
 
     @ExceptionHandler({EmailExistsException.class, UsernameExistsException.class})
-    public ResponseEntity<Object> handleExistingFieldException(SINU_Exception e) {
+    public ResponseEntity<ExceptionContainer> handleExistingFieldException(SINU_Exception e) {
         String errorName = e.getClass().getSimpleName();
         String cause = "";
 
@@ -30,6 +27,18 @@ public class UserExceptionHandler {
         }
 
         ExceptionContainer exception = new ExceptionContainer(errorName, e, Collections.singletonList(cause));
+        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({UserNotActivatedException.class})
+    public ResponseEntity<ExceptionContainer> handleUserNotActivatedException(UserNotActivatedException e) {
+        ExceptionContainer exception = new ExceptionContainer(e.getClass().getSimpleName(), e, Collections.singletonList(e.getUsername()));
+        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({InvalidTokenException.class, ExpiredTokenException.class})
+    public ResponseEntity<ExceptionContainer> handleTokenExceptions(SINU_Exception e) {
+        ExceptionContainer exception = new ExceptionContainer(e.getClass().getSimpleName(), e, null);
         return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
     }
 

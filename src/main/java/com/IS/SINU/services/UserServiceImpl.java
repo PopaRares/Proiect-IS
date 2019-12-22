@@ -3,6 +3,8 @@ package com.IS.SINU.services;
 import com.IS.SINU.entities.dao.User;
 import com.IS.SINU.entities.dto.UserDto;
 import com.IS.SINU.exceptions.EmailExistsException;
+import com.IS.SINU.exceptions.ExpiredTokenException;
+import com.IS.SINU.exceptions.InvalidTokenException;
 import com.IS.SINU.exceptions.UsernameExistsException;
 import com.IS.SINU.repositories.UserRepository;
 import com.IS.SINU.security.activation.ActivationToken;
@@ -68,12 +70,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public User activateAccount(String token) {
         User user = userRepository.findByActivationToken(token);
-        if(user == null) {
-            System.out.println("Invalid token!");
-            return null;
+        if(user == null || user.getActivated()) {
+            throw new InvalidTokenException();
         }
         if(!ActivationToken.verifyToken(token)) {
-            //token expired
+            throw new ExpiredTokenException();
         }
         userRepository.activateUser(user.getId());
         user.setActivated(true);

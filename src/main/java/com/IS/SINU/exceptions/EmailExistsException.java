@@ -1,8 +1,6 @@
 package com.IS.SINU.exceptions;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.http.HttpStatus;
 
 import java.time.ZonedDateTime;
 
@@ -12,8 +10,8 @@ public class EmailExistsException extends SINU_Exception {
     private String email;
 
     public EmailExistsException(String email) {
+        super();
         this.email = email;
         message = "There already is an account with that email adress: "  + email;
-        timestamp = ZonedDateTime.now();
     }
 }

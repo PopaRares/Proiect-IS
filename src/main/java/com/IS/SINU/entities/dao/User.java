@@ -58,5 +58,9 @@ public class User {
         this.groupID = 10;
         this.activated = false;
     }
+
+    public boolean getActivated() {
+        return activated;
+    }
 }
 
