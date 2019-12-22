@@ -7,14 +7,13 @@ import org.springframework.http.HttpStatus;
 import java.time.ZonedDateTime;
 
 @Data
-public class EmailExistsException extends RuntimeException {
-    private String message;
-    private String email;
+public class EmailExistsException extends SINU_Exception {
     private ZonedDateTime timestamp;
+    private String email;
 
     public EmailExistsException(String email) {
         this.email = email;
-        message = "There is an account with that email adress: "  + email;
+        message = "There already is an account with that email adress: "  + email;
         timestamp = ZonedDateTime.now();
     }
 }

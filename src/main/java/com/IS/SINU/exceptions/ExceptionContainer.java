@@ -13,4 +13,11 @@ public class ExceptionContainer {
     private String message;
     private List<Object>  causes;
     private ZonedDateTime timestamp;
+
+    public ExceptionContainer(String type, SINU_Exception exception, List<Object> causes) {
+        this.type = type;
+        this.message = exception.message;
+        this.timestamp = exception.timestamp;
+        this.causes = causes;
+    }
 }

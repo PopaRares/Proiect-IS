@@ -20,6 +20,9 @@ public class User {
     @Column(name = "activated")
     private boolean activated;
 
+    @Column(name = "activation_token")
+    private String activationToken;
+
     @Column(name = "first_name")
     private String firstName;
 

@@ -3,6 +3,7 @@ package com.IS.SINU.controllers;
 import com.IS.SINU.entities.dao.User;
 import com.IS.SINU.entities.dto.UserDto;
 import com.IS.SINU.exceptions.EmailExistsException;
+import com.IS.SINU.security.activation.ActivationToken;
 import com.IS.SINU.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,17 +25,16 @@ public class UserController {//in progress
     @Autowired
     private UserService service;
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String showRegistrationForm(WebRequest request, Model model) {
-        UserDto userDto = new UserDto();
-        model.addAttribute("user", userDto);
-        return "registration";
-    }
-
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ResponseEntity<User> registerUserAccount (@Valid @RequestBody UserDto regUser) throws EmailExistsException {
         User user = service.registerNewUserAccount(regUser);
         return ResponseEntity.ok(user);
+    }
+
+    @RequestMapping(value = "/activate", method = RequestMethod.POST)
+    public ResponseEntity<String> activateAccount(@RequestParam String token) {
+        ActivationToken.verifyToken(token);
+        return ResponseEntity.ok("Penis");
     }
 
 }
