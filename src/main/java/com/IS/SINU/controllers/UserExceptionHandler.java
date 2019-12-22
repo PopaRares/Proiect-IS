@@ -16,7 +16,7 @@ import java.util.Collections;
 @ControllerAdvice
 public class UserExceptionHandler {
 
-    @ExceptionHandler({SINU_Exception.class})
+    @ExceptionHandler({EmailExistsException.class, UsernameExistsException.class})
     public ResponseEntity<Object> handleExistingFieldException(SINU_Exception e) {
         String errorName = e.getClass().getSimpleName();
         String cause = "";

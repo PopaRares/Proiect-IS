@@ -26,15 +26,15 @@ public class UserController {//in progress
     private UserService service;
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ResponseEntity<User> registerUserAccount (@Valid @RequestBody UserDto regUser) throws EmailExistsException {
-        User user = service.registerNewUserAccount(regUser);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<String> registerUserAccount (@Valid @RequestBody UserDto regUser) throws EmailExistsException {
+        service.registerNewUserAccount(regUser);
+        return ResponseEntity.ok("Account registered. Check your email!");
     }
 
-    @RequestMapping(value = "/activate", method = RequestMethod.POST)
-    public ResponseEntity<String> activateAccount(@RequestParam String token) {
-        ActivationToken.verifyToken(token);
-        return ResponseEntity.ok("Penis");
+    @RequestMapping(value = "/activate", method = RequestMethod.GET)
+    public ResponseEntity<User> activateAccount(@RequestParam String token) {
+        User user = service.activateAccount(token);
+        return ResponseEntity.ok(user);
     }
 
 }

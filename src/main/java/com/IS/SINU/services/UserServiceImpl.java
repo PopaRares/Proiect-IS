@@ -65,4 +65,19 @@ public class UserServiceImpl implements UserService{
         mailSender.send(email);
     }
 
+    @Override
+    public User activateAccount(String token) {
+        User user = userRepository.findByActivationToken(token);
+        if(user == null) {
+            System.out.println("Invalid token!");
+            return null;
+        }
+        if(!ActivationToken.verifyToken(token)) {
+            //token expired
+        }
+        userRepository.activateUser(user.getId());
+        user.setActivated(true);
+        return user;
+    }
+
 }
