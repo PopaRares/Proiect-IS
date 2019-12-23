@@ -1,16 +1,27 @@
 package com.IS.SINU.entities.dao;
 
+import com.IS.SINU.entities.Role;
+import com.IS.SINU.entities.dto.UserDto;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
 @Data
+@NoArgsConstructor
 public class User {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY )
     private Long id;
+
+    @Column(name = "activated")
+    private boolean activated;
+
+    @Column(name = "activation_token")
+    private String activationToken;
 
     @Column(name = "first_name")
     private String firstName;
@@ -37,10 +48,19 @@ public class User {
     public String getRole() {
         return role.name();
     }
+
+    public User(UserDto u){
+        this.firstName = u.getFirstName();
+        this.lastName = u.getLastName();
+        this.email = u.getEmail();
+        this.username = u.getUsername();
+        this.role = Role.valueOf(u.getRole());
+        this.groupID = 10;
+        this.activated = false;
+    }
+
+    public boolean getActivated() {
+        return activated;
+    }
 }
 
-enum Role {
-    STUDENT,
-    PROFESSOR,
-    ADMIN
-}

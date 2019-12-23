@@ -2,6 +2,7 @@ package com.IS.SINU.controllers;
 
 import com.IS.SINU.entities.AuthenticationRequest;
 import com.IS.SINU.entities.dao.User;
+import com.IS.SINU.exceptions.UserNotActivatedException;
 import com.IS.SINU.repositories.UserRepository;
 import com.IS.SINU.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,10 @@ public class AuthenticationController {
             User user = this.users.findByUsername(username);
             String role = user.getRole();
 
+            if(!user.getActivated()) {
+                throw new UserNotActivatedException(user.getUsername());
+            }
+
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
 
             String token = jwtTokenProvider.createToken(username, role);
@@ -53,7 +58,10 @@ public class AuthenticationController {
             model.put("token", token);
 
             return ResponseEntity.ok(model);
-        } catch (Exception e){
+        } catch (UserNotActivatedException e) {//need better exception handling
+            throw e;
+        }
+        catch (Exception e){
             return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
     }
