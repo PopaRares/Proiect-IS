@@ -24,6 +24,6 @@ public class ActivationToken {//kinda hacky
     public static boolean verifyToken(String token) {
         long now = Instant.now().toEpochMilli();
         long then = Long.parseLong(token.substring(14));
-        return now - then > 86400000;//one day
+        return now - then <= 86400000;//one day
     }
 }

@@ -3,19 +3,15 @@ package com.IS.SINU.controllers;
 import com.IS.SINU.entities.dao.User;
 import com.IS.SINU.entities.dto.UserDto;
 import com.IS.SINU.exceptions.EmailExistsException;
-import com.IS.SINU.security.activation.ActivationToken;
 import com.IS.SINU.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 import javax.validation.Valid;
-
+import java.util.Collections;
+import java.util.Map;
 
 
 @RestController
@@ -25,13 +21,13 @@ public class UserController {//in progress
     @Autowired
     private UserService service;
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ResponseEntity<String> registerUserAccount (@Valid @RequestBody UserDto regUser) throws EmailExistsException {
+    @RequestMapping(value = "/registration", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map> registerUserAccount (@Valid @RequestBody UserDto regUser) throws EmailExistsException {
         service.registerNewUserAccount(regUser);
-        return ResponseEntity.ok("Account registered. Check your email!");
+        return ResponseEntity.ok(Collections.singletonMap("response", "Account registered. Check your email!"));
     }
 
-    @RequestMapping(value = "/activate", method = RequestMethod.GET)
+    @RequestMapping(value = "/activate", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> activateAccount(@RequestParam String token) {
         User user = service.activateAccount(token);
         return ResponseEntity.ok(user);
