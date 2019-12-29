@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Random;
 
 @Entity
 @Table(name = "users")
@@ -14,7 +15,7 @@ import javax.persistence.*;
 public class User {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
 
     @Column(name = "activated")
@@ -43,7 +44,7 @@ public class User {
     private Role role;
 
     @Column(name = "group_id")
-    private int groupID;//temporary
+    private Long groupID;//temporary
 
     public String getRole() {
         return role.name();
@@ -55,12 +56,17 @@ public class User {
         this.email = u.getEmail();
         this.username = u.getUsername();
         this.role = Role.valueOf(u.getRole());
-        this.groupID = 10;
+        this.groupID = assignGroup();
         this.activated = false;
     }
 
     public boolean getActivated() {
         return activated;
+    }
+
+    private long assignGroup() {
+        Random random = new Random();
+        return random.nextInt(Math.toIntExact(10L));
     }
 }
 

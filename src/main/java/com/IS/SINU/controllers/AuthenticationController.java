@@ -53,8 +53,7 @@ public class AuthenticationController {
             String token = jwtTokenProvider.createToken(username, role);
 
             Map<Object, Object> model = new HashMap<>();
-            model.put("username", username);
-            model.put("role", role);
+            model.put("user", user);
             model.put("token", token);
 
             return ResponseEntity.ok(model);
