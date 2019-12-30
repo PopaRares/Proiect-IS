@@ -42,4 +42,10 @@ public class UserExceptionHandler {
         return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler({NonexistentUserException.class})
+    public ResponseEntity<ExceptionContainer> handleNoUserException(NonexistentUserException e) {
+        ExceptionContainer exception = new ExceptionContainer(e.getClass().getSimpleName(), e, Collections.singletonList(e.getUsername()));
+        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+    }
+
 }

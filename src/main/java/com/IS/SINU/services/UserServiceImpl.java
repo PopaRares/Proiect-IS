@@ -2,10 +2,7 @@ package com.IS.SINU.services;
 
 import com.IS.SINU.entities.dao.User;
 import com.IS.SINU.entities.dto.UserDto;
-import com.IS.SINU.exceptions.EmailExistsException;
-import com.IS.SINU.exceptions.ExpiredTokenException;
-import com.IS.SINU.exceptions.InvalidTokenException;
-import com.IS.SINU.exceptions.UsernameExistsException;
+import com.IS.SINU.exceptions.*;
 import com.IS.SINU.repositories.UserRepository;
 import com.IS.SINU.security.activation.ActivationToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +13,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository repository;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -42,7 +40,7 @@ public class UserServiceImpl implements UserService{
 
         String token = ActivationToken.generate();
         user.setActivationToken(token);
-        userRepository.save(user);
+        repository.save(user);
 
         sendActivationEmail(user.getEmail(), token);
 
@@ -50,12 +48,12 @@ public class UserServiceImpl implements UserService{
     }
 
     private boolean emailExist(String email) {
-        User user = userRepository.findByEmail(email);
+        User user = repository.findByEmail(email);
         return user != null;
     }
 
     private boolean usernameExist(String username) {
-        User user = userRepository.findByUsername(username);
+        User user = repository.findByUsername(username);
         return user != null;
     }
 
@@ -69,15 +67,24 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User activateAccount(String token) {
-        User user = userRepository.findByActivationToken(token);
+        User user = repository.findByActivationToken(token);
         if(user == null || user.getActivated()) {
             throw new InvalidTokenException();
         }
         if(!ActivationToken.verifyToken(token)) {
             throw new ExpiredTokenException();
         }
-        userRepository.activateUser(user.getId());
+        repository.activateUser(user.getId());
         user.setActivated(true);
+        return user;
+    }
+
+    @Override
+    public User getUser(String username) {
+        User user = repository.findByUsername(username);
+        if(user == null) {
+            throw new NonexistentUserException(username);
+        }
         return user;
     }
 
