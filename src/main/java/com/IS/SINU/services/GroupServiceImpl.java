@@ -14,7 +14,7 @@ public class GroupServiceImpl implements GroupService{
 
     @Override
     public Group getGroup(User user) {
-        System.out.println(repository.getOne(10L));
-        return null;
+        Group G = repository.getOne(user.getGroupID());
+        return G;
     }
 }

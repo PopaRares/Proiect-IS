@@ -21,6 +21,8 @@ public class GroupController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Group> getGroup(@RequestBody User user) {
         Group group = service.getGroup(user);
+        System.out.println("IN CONTROLLER");
+        System.out.println(group);
         return ResponseEntity.ok(group);
     }
 }

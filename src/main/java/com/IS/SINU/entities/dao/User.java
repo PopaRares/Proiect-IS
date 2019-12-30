@@ -2,6 +2,8 @@ package com.IS.SINU.entities.dao;
 
 import com.IS.SINU.entities.Role;
 import com.IS.SINU.entities.dto.UserDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,12 +18,18 @@ public class User {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long id;
 
     @Column(name = "activated")
+    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private boolean activated;
 
     @Column(name = "activation_token")
+    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String activationToken;
 
     @Column(name = "first_name")
@@ -44,6 +52,8 @@ public class User {
     private Role role;
 
     @Column(name = "group_id")
+    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long groupID;//temporary
 
     public String getRole() {
