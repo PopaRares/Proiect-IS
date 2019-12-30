@@ -2,10 +2,13 @@ package com.IS.SINU.entities.dao;
 
 import com.IS.SINU.entities.Role;
 import com.IS.SINU.entities.dto.UserDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Random;
 
 @Entity
 @Table(name = "users")
@@ -14,13 +17,19 @@ import javax.persistence.*;
 public class User {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long id;
 
     @Column(name = "activated")
+    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private boolean activated;
 
     @Column(name = "activation_token")
+    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String activationToken;
 
     @Column(name = "first_name")
@@ -43,7 +52,9 @@ public class User {
     private Role role;
 
     @Column(name = "group_id")
-    private int groupID;//temporary
+    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long groupID;//temporary
 
     public String getRole() {
         return role.name();
@@ -55,12 +66,17 @@ public class User {
         this.email = u.getEmail();
         this.username = u.getUsername();
         this.role = Role.valueOf(u.getRole());
-        this.groupID = 10;
+        this.groupID = assignGroup();
         this.activated = false;
     }
 
     public boolean getActivated() {
         return activated;
+    }
+
+    private long assignGroup() {
+        Random random = new Random();
+        return random.nextInt(Math.toIntExact(10L));
     }
 }
 

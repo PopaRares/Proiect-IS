@@ -1,6 +1,7 @@
 package com.IS.SINU.controllers;
 
 import com.IS.SINU.entities.dao.User;
+import com.IS.SINU.entities.dto.Request;
 import com.IS.SINU.entities.dto.UserDto;
 import com.IS.SINU.exceptions.EmailExistsException;
 import com.IS.SINU.services.UserService;
@@ -9,6 +10,7 @@ import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.Map;
@@ -22,7 +24,7 @@ public class UserController {//in progress
     private UserService service;
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map> registerUserAccount (@Valid @RequestBody UserDto regUser) throws EmailExistsException {
+    public ResponseEntity<Map> registerUserAccount(@Valid @RequestBody UserDto regUser) throws EmailExistsException {
         service.registerNewUserAccount(regUser);
         return ResponseEntity.ok(Collections.singletonMap("response", "Account registered. Check your email!"));
     }
@@ -34,4 +36,9 @@ public class UserController {//in progress
         return ResponseEntity.ok(user);
     }
 
+    @RequestMapping(value = "/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> getUser(@PathVariable String username) {
+        User user = service.getUser(username);
+        return ResponseEntity.ok(user);
+    }
 }

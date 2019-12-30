@@ -1,4 +1,4 @@
-package com.IS.SINU.controllers;
+package com.IS.SINU.controllers.exceptionHandlers;
 
 import com.IS.SINU.exceptions.*;
 import org.springframework.http.HttpStatus;
@@ -39,6 +39,12 @@ public class UserExceptionHandler {
     @ExceptionHandler({InvalidTokenException.class, ExpiredTokenException.class})
     public ResponseEntity<ExceptionContainer> handleTokenExceptions(SINU_Exception e) {
         ExceptionContainer exception = new ExceptionContainer(e.getClass().getSimpleName(), e, null);
+        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({NonexistentUserException.class})
+    public ResponseEntity<ExceptionContainer> handleNoUserException(NonexistentUserException e) {
+        ExceptionContainer exception = new ExceptionContainer(e.getClass().getSimpleName(), e, Collections.singletonList(e.getUsername()));
         return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
     }
 
