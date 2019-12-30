@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService{
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
         email.setSubject("SINU Account Activation");
-        email.setText("http://localhost:8080/user/activate?token=" + token);
+        email.setText("http://localhost:8080/user/activate/" + token);
         mailSender.send(email);
     }
 

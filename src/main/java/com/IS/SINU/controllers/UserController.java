@@ -27,8 +27,9 @@ public class UserController {//in progress
         return ResponseEntity.ok(Collections.singletonMap("response", "Account registered. Check your email!"));
     }
 
-    @RequestMapping(value = "/activate", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> activateAccount(@RequestParam String token) {
+    @RequestMapping(value = "/activate/{token}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> activateAccount(@PathVariable String token) {
+        System.out.println(token);
         User user = service.activateAccount(token);
         return ResponseEntity.ok(user);
     }
