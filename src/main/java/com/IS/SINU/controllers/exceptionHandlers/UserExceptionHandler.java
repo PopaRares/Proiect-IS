@@ -1,4 +1,4 @@
-package com.IS.SINU.controllers;
+package com.IS.SINU.controllers.exceptionHandlers;
 
 import com.IS.SINU.exceptions.*;
 import org.springframework.http.HttpStatus;

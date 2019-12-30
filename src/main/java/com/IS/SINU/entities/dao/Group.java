@@ -33,6 +33,7 @@ public class Group {
     private String faculty;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("firstName ASC, lastName ASC")
     @JoinColumn(name = "group_id")
     private Set<User> students;
 
