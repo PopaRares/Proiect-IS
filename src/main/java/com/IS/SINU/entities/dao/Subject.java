@@ -1,7 +1,8 @@
 package com.IS.SINU.entities.dao;
 
-import com.IS.SINU.entities.Semester;
+import com.IS.SINU.entities.enums.Semester;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -10,13 +11,13 @@ import javax.persistence.*;
 @Entity
 @Table(name = "subject")
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Subject {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     @JsonIgnore
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long id;
 
     @Column(name = "name")
@@ -26,6 +27,7 @@ public class Subject {
     private Integer year;
 
     @Column(name = "semester")
+    @Enumerated(EnumType.STRING)
     private Semester semester;
 
     @Column(name = "credits")

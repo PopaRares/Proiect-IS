@@ -1,4 +1,4 @@
-package com.IS.SINU.entities;
+package com.IS.SINU.entities.enums;
 
 public enum Semester {
     FIRST,

@@ -1,6 +1,6 @@
 package com.IS.SINU.entities.dao;
 
-import com.IS.SINU.entities.SubjectType;
+import com.IS.SINU.entities.enums.SubjectType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -14,15 +14,16 @@ public class Class {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long id;
 
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private SubjectType type;
 
-    @ManyToOne
-    @JoinColumn(name = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "subject_id")
     private Subject subject;
 }
