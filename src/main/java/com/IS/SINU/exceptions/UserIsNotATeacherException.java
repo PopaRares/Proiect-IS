@@ -9,6 +9,6 @@ public class UserIsNotATeacherException extends SINU_Exception {
     public UserIsNotATeacherException(String username) {
         super();
         this.username = username;
-        message = "There user: " + username + " is not registered as a PROFESSOR.";
+        message = "The user " + username + " is not registered as a PROFESSOR.";
     }
 }

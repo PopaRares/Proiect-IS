@@ -34,7 +34,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<ScheduleEntry> getTeacherSchedule(Request request) {
         if(request.getRole().equalsIgnoreCase(Role.PROFESSOR.toString())) {
-            return repository.findByTeacher(request.getUsername());
+            List<ScheduleEntry> timetable = repository.findByTeacher(request.getUsername());
+            if(timetable.isEmpty() || timetable.get(0) == null) {
+                throw new UserIsNotATeacherException(request.getUsername());
+            } else {
+                return timetable;
+            }
         } else {
             throw new UserIsNotATeacherException(request.getUsername());
         }
@@ -43,7 +48,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<ScheduleEntry> getTeacherSchedule(String username) {
         User teacher = userRepository.findByUsername(username);
-        if(teacher.getRole().equals(Role.PROFESSOR.toString())) {
+        if(teacher != null && teacher.getRole().equals(Role.PROFESSOR.toString())) {
             return repository.findByTeacher(username);
         } else {
             throw new UserIsNotATeacherException(username);
