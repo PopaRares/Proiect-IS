@@ -2,7 +2,6 @@ package com.IS.SINU.exceptions;
 
 import lombok.Data;
 
-import java.time.ZonedDateTime;
 
 @Data
 public class UsernameExistsException extends SINU_Exception {
