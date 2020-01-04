@@ -7,6 +7,10 @@ import java.util.List;
 
 public interface ScheduleService {
     List<ScheduleEntry> getGroupSchedule(Long groupId);
+
     List<ScheduleEntry> getTeacherSchedule(Request request);
     List<ScheduleEntry> getTeacherSchedule(String username);
+
+    List<ScheduleEntry> getStudentSchedule(Request request);
+    List<ScheduleEntry> getStudentSchedule(String username);
 }

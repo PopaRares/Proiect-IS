@@ -1,4 +1,4 @@
-package com.IS.SINU.entities;
+package com.IS.SINU.entities.dao;
 
 import com.IS.SINU.entities.dao.Group;
 import com.IS.SINU.entities.dao.Teaching;

@@ -1,11 +1,14 @@
 package com.IS.SINU.services;
 
+import com.IS.SINU.entities.dao.Group;
 import com.IS.SINU.entities.dao.ScheduleEntry;
 import com.IS.SINU.entities.dao.User;
 import com.IS.SINU.entities.dto.Request;
 import com.IS.SINU.entities.enums.Role;
 import com.IS.SINU.exceptions.InvalidGroupIdException;
+import com.IS.SINU.exceptions.NonexistentUserException;
 import com.IS.SINU.exceptions.UserIsNotATeacherException;
+import com.IS.SINU.repositories.GroupRepository;
 import com.IS.SINU.repositories.ScheduleRepository;
 import com.IS.SINU.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +25,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private GroupRepository groupRepository;
+
     @Override
     public List<ScheduleEntry> getGroupSchedule(Long groupId) {
-        List<ScheduleEntry> timetable = repository.findByGroup(groupId);
+        List<ScheduleEntry> timetable = repository.findByGroupId(groupId);
         if(timetable.isEmpty() || timetable.get(0) == null) {
             throw new InvalidGroupIdException(groupId);
         }
@@ -52,6 +58,32 @@ public class ScheduleServiceImpl implements ScheduleService {
             return repository.findByTeacher(username);
         } else {
             throw new UserIsNotATeacherException(username);
+        }
+    }
+
+    @Override
+    public List<ScheduleEntry> getStudentSchedule(Request request) {
+        if(request.getRole().equalsIgnoreCase(Role.STUDENT.toString())) {
+            Group group = groupRepository.findByUsername(request.getUsername());
+            List<ScheduleEntry> timetable = repository.findByGroupId(group.getId());
+            if(timetable.isEmpty() || timetable.get(0) == null) {
+                throw new NonexistentUserException(request.getUsername());
+            } else {
+                return timetable;
+            }
+        } else {
+            throw new NonexistentUserException(request.getUsername());
+        }
+    }
+
+    @Override
+    public List<ScheduleEntry> getStudentSchedule(String username) {
+        User student = userRepository.findByUsername(username);
+        Group group = groupRepository.findByUsername(username);
+        if(student != null && student.getRole().equals(Role.STUDENT.toString())) {
+            return repository.findByGroupId(group.getId());
+        } else {
+            throw new NonexistentUserException(username);
         }
     }
 }

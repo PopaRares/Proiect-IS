@@ -1,6 +1,5 @@
 package com.IS.SINU.entities.dao;
 
-import com.IS.SINU.entities.ScheduleIdentity;
 import com.IS.SINU.entities.enums.Parity;
 import com.IS.SINU.entities.enums.Weekday;
 import lombok.Data;

@@ -2,11 +2,7 @@ package com.IS.SINU.controllers;
 
 import com.IS.SINU.entities.dao.Group;
 import com.IS.SINU.entities.dao.ScheduleEntry;
-import com.IS.SINU.entities.dao.Teaching;
 import com.IS.SINU.entities.dto.Request;
-import com.IS.SINU.exceptions.InvalidGroupIdException;
-import com.IS.SINU.repositories.ScheduleRepository;
-import com.IS.SINU.repositories.TeachingRepository;
 import com.IS.SINU.services.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -46,4 +42,15 @@ public class ScheduleController {
         return ResponseEntity.ok(timetable);
     }
 
+    @RequestMapping(value = "student/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ScheduleEntry>> getStudentSchedule(@PathVariable String username) {
+        List<ScheduleEntry> timetable = service.getStudentSchedule(username);
+        return ResponseEntity.ok(timetable);
+    }
+
+    @RequestMapping(value = "student", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ScheduleEntry>> getStudentSchedule(@RequestBody Request request) {
+        List<ScheduleEntry> timetable = service.getStudentSchedule(request);
+        return ResponseEntity.ok(timetable);
+    }
 }
