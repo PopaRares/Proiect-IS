@@ -5,9 +5,11 @@ import com.IS.SINU.entities.dto.GradeRequest;
 import com.IS.SINU.exceptions.NonexistentUserException;
 import com.IS.SINU.repositories.GradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class GradeServiceImpl implements GradeService {
     @Autowired
     private GradeRepository repository;
