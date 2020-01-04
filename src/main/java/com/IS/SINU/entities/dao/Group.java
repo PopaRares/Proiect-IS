@@ -32,8 +32,8 @@ public class Group {
     @Column(name = "faculty")
     private String faculty;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("firstName ASC, lastName ASC")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OrderBy("lastName ASC, firstName ASC")
     @JoinColumn(name = "group_id")
     private Set<User> students;
 

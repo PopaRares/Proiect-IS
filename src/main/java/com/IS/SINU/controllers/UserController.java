@@ -1,12 +1,10 @@
 package com.IS.SINU.controllers;
 
 import com.IS.SINU.entities.dao.User;
-import com.IS.SINU.entities.dto.Request;
 import com.IS.SINU.entities.dto.UserDto;
 import com.IS.SINU.exceptions.EmailExistsException;
 import com.IS.SINU.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
 package com.IS.SINU.entities.dao;
 
-import com.IS.SINU.entities.Role;
+import com.IS.SINU.entities.enums.Role;
 import com.IS.SINU.entities.dto.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -45,6 +45,7 @@ public class User {
     private String username;
 
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     @Column(name = "role")
