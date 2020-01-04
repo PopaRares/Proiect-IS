@@ -7,9 +7,9 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "grades")
+@Table(name = "final_grades")
 @Data
-public class Grade {
+public class FinalGrade {
 
     @Id
     @Column(name = "id")
@@ -25,10 +25,11 @@ public class Grade {
     private Date date;
 
     @ManyToOne
-    @JoinColumn(name = "teaching_id")
-    private Teaching teaching;
+    @JoinColumn(name = "subject_id")
+    private Subject subject;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
     private User student;
+
 }
