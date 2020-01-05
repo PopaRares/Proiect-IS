@@ -3,6 +3,7 @@ package com.IS.SINU.security.jwt;
 import com.google.common.hash.Hashing;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,7 +26,7 @@ public class JwtTokenProvider {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    private SecretKey secretKey;
+    protected static SecretKey secretKey;
 
     @PostConstruct
     protected void createKey() {
@@ -74,7 +75,6 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) throws InvalidJwtAuthenticationException {
         try{
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-
             return !claims.getBody().getExpiration().before(new Date());//returns true when token is expired
 
         } catch (JwtException | IllegalArgumentException e) {
