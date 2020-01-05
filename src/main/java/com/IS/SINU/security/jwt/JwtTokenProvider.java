@@ -1,5 +1,7 @@
 package com.IS.SINU.security.jwt;
 
+import com.IS.SINU.entities.CurrentUser;
+import com.IS.SINU.entities.enums.Role;
 import com.google.common.hash.Hashing;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -26,7 +28,7 @@ public class JwtTokenProvider {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    protected static SecretKey secretKey;
+    private SecretKey secretKey;
 
     @PostConstruct
     protected void createKey() {
@@ -81,4 +83,11 @@ public class JwtTokenProvider {
             throw new InvalidJwtAuthenticationException("Expired or invalid Jwt token");
         }
     }
+
+    public void memoriseUser(String token) {
+        Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+        CurrentUser.username = claims.getBody().get("sub").toString();
+        CurrentUser.role = Role.valueOf(claims.getBody().get("roles").toString().toUpperCase());
+    }
+
 }

@@ -24,9 +24,9 @@ public class GradeController {
         return ResponseEntity.ok(grades);
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Grade>> getStudentGrades(@RequestBody GradeRequest request) {
-        List<Grade> grades = service.getGrades(request);
-        return ResponseEntity.ok(grades);
-    }
+//    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<List<Grade>> getStudentGrades(@RequestBody GradeRequest request) {
+//        List<Grade> grades = service.getGrades(request);
+//        return ResponseEntity.ok(grades);
+//    }
 }

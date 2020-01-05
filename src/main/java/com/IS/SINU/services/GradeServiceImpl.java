@@ -17,9 +17,10 @@ public class GradeServiceImpl implements GradeService {
     private GradeRepository repository;
 
     @Override
-    public List<Grade> getGrades() {//not done
+    public List<Grade> getGrades() {
         List<Grade> grades = null;
         if(CurrentUser.role == Role.STUDENT) {
+            System.out.println(CurrentUser.username);
             grades = repository.findByUsername(CurrentUser.username);
         }
         if(CurrentUser.role == Role.PROFESSOR) {

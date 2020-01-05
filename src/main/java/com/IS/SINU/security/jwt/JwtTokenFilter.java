@@ -2,9 +2,11 @@ package com.IS.SINU.security.jwt;
 
 import com.IS.SINU.entities.CurrentUser;
 import com.IS.SINU.entities.enums.Role;
+import com.google.common.hash.Hashing;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -16,8 +18,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
-import static com.IS.SINU.security.jwt.JwtTokenProvider.secretKey;
 
 public class JwtTokenFilter extends GenericFilterBean {
 
@@ -34,7 +36,7 @@ public class JwtTokenFilter extends GenericFilterBean {
             HttpServletRequest request = (HttpServletRequest) req;
             if(!request.getRequestURL().toString().contains("/login")) {
                 String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
-                memoriseUser(token);
+                jwtTokenProvider.memoriseUser(token);
                 if (token != null && jwtTokenProvider.getAuthentication(token) != null) {
                     Authentication auth = jwtTokenProvider.getAuthentication(token);
 
@@ -52,9 +54,5 @@ public class JwtTokenFilter extends GenericFilterBean {
         }
     }
 
-    private void memoriseUser(String token) {
-        Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-        CurrentUser.username = claims.getBody().get("sub").toString();
-        CurrentUser.role = Role.valueOf(claims.getBody().get("role").toString().toUpperCase());
-    }
+
 }
