@@ -6,6 +6,6 @@ import com.IS.SINU.entities.dto.GradeRequest;
 import java.util.List;
 
 public interface GradeService {
-    List<Grade> getGrades(String username);
+    List<Grade> getGrades();
     List<Grade> getGrades(GradeRequest request);
 }

@@ -1,5 +1,6 @@
 package com.IS.SINU.controllers;
 
+import com.IS.SINU.entities.CurrentUser;
 import com.IS.SINU.entities.dao.Grade;
 import com.IS.SINU.entities.dto.GradeRequest;
 import com.IS.SINU.services.GradeService;
@@ -17,9 +18,9 @@ public class GradeController {
     @Autowired
     private GradeService service;
 
-    @RequestMapping(value = "/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Grade>> getStudentGrades(@PathVariable String username) {
-        List<Grade> grades = service.getGrades(username);
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Grade>> getStudentGrades() {
+        List<Grade> grades = service.getGrades();
         return ResponseEntity.ok(grades);
     }
 

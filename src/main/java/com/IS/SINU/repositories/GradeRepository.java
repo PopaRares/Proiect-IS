@@ -16,4 +16,7 @@ public interface GradeRepository extends JpaRepository<Grade, Long> {
 
     @Query("from Grade G where G.student.username = ?1 and G.teaching.class_name.subject.name = ?2 and G.teaching.class_name.type = ?3")
     List<Grade> findByClassType(String username, String subjectName, String classType);
+
+    @Query("from Grade G where G.teaching.professor.username = ?1")
+    List<Grade> findByTeacher(String username);
 }

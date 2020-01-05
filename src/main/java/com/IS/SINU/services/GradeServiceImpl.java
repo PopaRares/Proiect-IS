@@ -1,7 +1,9 @@
 package com.IS.SINU.services;
 
+import com.IS.SINU.entities.CurrentUser;
 import com.IS.SINU.entities.dao.Grade;
 import com.IS.SINU.entities.dto.GradeRequest;
+import com.IS.SINU.entities.enums.Role;
 import com.IS.SINU.exceptions.NonexistentUserException;
 import com.IS.SINU.repositories.GradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +17,15 @@ public class GradeServiceImpl implements GradeService {
     private GradeRepository repository;
 
     @Override
-    public List<Grade> getGrades(String username) {//not done
-        List<Grade> grades = repository.findByUsername(username);
-        if(grades.isEmpty()) {
-            throw new NonexistentUserException(username);
-        } else {
-            return grades;
+    public List<Grade> getGrades() {//not done
+        List<Grade> grades = null;
+        if(CurrentUser.role == Role.STUDENT) {
+            grades = repository.findByUsername(CurrentUser.username);
         }
+        if(CurrentUser.role == Role.PROFESSOR) {
+            grades = repository.findByTeacher(CurrentUser.username);
+        }
+        return grades;
     }
 
     @Override
