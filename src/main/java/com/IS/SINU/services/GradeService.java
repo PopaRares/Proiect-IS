@@ -6,6 +6,5 @@ import com.IS.SINU.entities.dto.GradeRequest;
 import java.util.List;
 
 public interface GradeService {
-    List<Grade> getGrades();
-    List<Grade> getGrades(GradeRequest request);
+    List<Grade> getGrades(String subject, String type, Integer year, String semester);
 }

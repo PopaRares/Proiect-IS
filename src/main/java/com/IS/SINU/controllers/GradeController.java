@@ -19,14 +19,11 @@ public class GradeController {
     private GradeService service;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Grade>> getStudentGrades() {
-        List<Grade> grades = service.getGrades();
+    public ResponseEntity<List<Grade>> getStudentGrades(@RequestParam(required = false) String subject,
+                                                        @RequestParam(required = false) String type,
+                                                        @RequestParam(required = false) Integer year,
+                                                        @RequestParam(required = false) String semester) {
+        List<Grade> grades = service.getGrades(subject, type, year, semester);
         return ResponseEntity.ok(grades);
     }
-
-//    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<List<Grade>> getStudentGrades(@RequestBody GradeRequest request) {
-//        List<Grade> grades = service.getGrades(request);
-//        return ResponseEntity.ok(grades);
-//    }
 }
