@@ -28,8 +28,7 @@ public class GradeController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Grade> giveGrade(@RequestBody GradeDto gradeDto) {
-        Grade grade = null;
-        System.out.println(gradeDto);
+        Grade grade = service.giveGrade(gradeDto);
         return ResponseEntity.ok(grade);
     }
 }

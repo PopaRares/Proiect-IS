@@ -1,6 +1,7 @@
 package com.IS.SINU.repositories;
 
 import com.IS.SINU.entities.dao.Group;
+import com.IS.SINU.entities.dao.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

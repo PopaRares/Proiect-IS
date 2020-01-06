@@ -1,6 +1,7 @@
 package com.IS.SINU.repositories;
 
 import com.IS.SINU.entities.dao.Grade;
+import com.IS.SINU.entities.dao.Teaching;
 import com.IS.SINU.entities.enums.Semester;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
