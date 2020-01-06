@@ -4,6 +4,7 @@ import com.IS.SINU.entities.CurrentUser;
 import com.IS.SINU.entities.dao.Grade;
 import com.IS.SINU.entities.dao.Group;
 import com.IS.SINU.entities.dao.Teaching;
+import com.IS.SINU.entities.dao.User;
 import com.IS.SINU.entities.dto.GradeDto;
 import com.IS.SINU.entities.enums.Role;
 import com.IS.SINU.exceptions.*;
@@ -28,6 +29,9 @@ public class GradeServiceImpl implements GradeService {
     @Autowired
     private GroupRepository groupRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public List<Grade> getGrades(String subject, String type, Integer year, String semester) {
         List<Grade> grades = null;
@@ -48,7 +52,11 @@ public class GradeServiceImpl implements GradeService {
 
     @Override
     public Grade giveGrade(GradeDto gradeDto) {
+        User student = userRepository.findByUsername(gradeDto.getStudentUsername());
         if(gradeDto.getDate() == null) gradeDto.setDate(new Date());
+        if(gradeDto.getDate().after(new Date())) {
+            throw new DateInFutureException(gradeDto.getDate());
+        }
         if(gradeDto.getGrade() <= 0 || gradeDto.getGrade() > 10) {
             throw new GradeNotInRangeException(gradeDto.getGrade());
         }
@@ -59,11 +67,19 @@ public class GradeServiceImpl implements GradeService {
         if(teaching == null) {
             throw new TeacherNotTeachingClassException();
         }
-        Group group = groupRepository.findByTeaching(teaching);
-        if(!group.getStudents().contains(gradeDto.getStudent())) {
-            throw new TeacherNotAuthorisedException(gradeDto.getStudent().getFirstName(), gradeDto.getStudent().getLastName());
+        List<Group> groups = groupRepository.findByTeaching(teaching);
+        boolean found = false;
+        for (Group G: groups) {
+            if(G.getStudents().contains(student)) {
+                found = true;
+                break;
+            }
         }
-        Grade G = new Grade(teaching, gradeDto);
+        if(!found) {
+            throw new TeacherNotAuthorisedException(student.getFirstName(), student.getLastName());
+        }
+        Grade G = new Grade(teaching, gradeDto, student);
+        System.out.println(G);
         repository.save(G);
         return G;
     }

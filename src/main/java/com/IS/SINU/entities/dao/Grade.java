@@ -41,13 +41,13 @@ public class Grade {
     @Column(name = "student_id")
     private Long studentId;
 
-    public Grade(Teaching teaching, GradeDto gradeDto) {
+    public Grade(Teaching teaching, GradeDto gradeDto, User student) {
         this.teachingId = teaching.getId();
         this.grade = gradeDto.getGrade();
         this.date = gradeDto.getDate();
-        this.studentId = gradeDto.getStudent().getId();
+        this.studentId = student.getId();
 
         this.teaching = teaching;
-        this.student = gradeDto.getStudent();
+        this.student = student;
     }
 }

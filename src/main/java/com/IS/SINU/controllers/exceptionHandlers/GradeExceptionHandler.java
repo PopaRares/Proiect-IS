@@ -22,7 +22,7 @@ public class GradeExceptionHandler {
         return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({GradeNotInRangeException.class, TeacherNotAuthorisedException.class, TeacherNotTeachingClassException.class})
+    @ExceptionHandler({GradeNotInRangeException.class, TeacherNotAuthorisedException.class, TeacherNotTeachingClassException.class, DateInFutureException.class})
     public ResponseEntity<ExceptionContainer> handleInvalidGradeInputs(SINU_Exception e) {
         ArrayList<Object> causes = new ArrayList<>();
         switch (e.getClass().getSimpleName()) {
@@ -33,6 +33,8 @@ public class GradeExceptionHandler {
                 causes.add(((TeacherNotAuthorisedException) e).getStudentFirstName());
                 causes.add(((TeacherNotAuthorisedException) e).getStudentLastName());
                 break;
+            case "DateInFutureException":
+                causes.add(((DateInFutureException)e).getDate());
         }
         return new ResponseEntity<>(new ExceptionContainer(e.getClass().getSimpleName(), e, causes), HttpStatus.BAD_REQUEST);
     }
