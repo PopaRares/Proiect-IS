@@ -1,5 +1,8 @@
 package com.IS.SINU.services;
 
+import com.IS.SINU.entities.dao.Class;
+import com.IS.SINU.entities.dao.ClassGroup;
+import com.IS.SINU.entities.dao.Group;
 import com.IS.SINU.entities.dao.User;
 import com.IS.SINU.entities.dto.UserDto;
 import com.IS.SINU.exceptions.*;
@@ -13,6 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -86,6 +92,12 @@ public class UserServiceImpl implements UserService{
             throw new NonexistentUserException(username);
         }
         return user;
+    }
+
+    @Override
+    public List<ClassGroup> getTeachingList(Long id) {
+        List<ClassGroup> classGroups = repository.getClassGroupList(id);
+        return classGroups;
     }
 
 }

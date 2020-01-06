@@ -2,11 +2,8 @@ package com.IS.SINU.services;
 
 import com.IS.SINU.entities.CurrentUser;
 import com.IS.SINU.entities.dao.Grade;
-import com.IS.SINU.entities.dto.GradeRequest;
 import com.IS.SINU.entities.enums.Role;
-import com.IS.SINU.entities.enums.Semester;
 import com.IS.SINU.exceptions.NoAvailableGradesException;
-import com.IS.SINU.exceptions.NonexistentUserException;
 import com.IS.SINU.repositories.GradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

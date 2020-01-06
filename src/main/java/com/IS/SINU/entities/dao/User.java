@@ -56,10 +56,6 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long groupID;//temporary
 
-    public String getRole() {
-        return role.name();
-    }
-
     public User(UserDto u){
         this.firstName = u.getFirstName();
         this.lastName = u.getLastName();

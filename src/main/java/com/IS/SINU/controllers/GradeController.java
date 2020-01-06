@@ -1,8 +1,7 @@
 package com.IS.SINU.controllers;
 
-import com.IS.SINU.entities.CurrentUser;
 import com.IS.SINU.entities.dao.Grade;
-import com.IS.SINU.entities.dto.GradeRequest;
+import com.IS.SINU.entities.dto.GradeDto;
 import com.IS.SINU.services.GradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -25,5 +24,12 @@ public class GradeController {
                                                         @RequestParam(required = false) String semester) {
         List<Grade> grades = service.getGrades(subject, type, year, semester);
         return ResponseEntity.ok(grades);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Grade> giveGrade(@RequestBody GradeDto gradeDto) {
+        Grade grade = null;
+        System.out.println(gradeDto);
+        return ResponseEntity.ok(grade);
     }
 }
