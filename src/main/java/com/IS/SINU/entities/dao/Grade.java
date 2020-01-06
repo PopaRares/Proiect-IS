@@ -45,6 +45,9 @@ public class Grade {
         this.teachingId = teaching.getId();
         this.grade = gradeDto.getGrade();
         this.date = gradeDto.getDate();
-        this.studentId = gradeDto.getStudentId();
+        this.studentId = gradeDto.getStudent().getId();
+
+        this.teaching = teaching;
+        this.student = gradeDto.getStudent();
     }
 }

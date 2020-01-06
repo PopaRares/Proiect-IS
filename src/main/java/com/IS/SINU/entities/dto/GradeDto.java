@@ -1,5 +1,6 @@
 package com.IS.SINU.entities.dto;
 
+import com.IS.SINU.entities.dao.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -14,6 +15,6 @@ public class GradeDto {
     @JsonProperty("class_id")
     private Long classId;
 
-    @JsonProperty("student_id")
-    private Long studentId;
+    @JsonProperty("student")
+    private User student;
 }

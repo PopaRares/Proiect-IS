@@ -3,6 +3,7 @@ package com.IS.SINU.entities.dao;
 import com.IS.SINU.entities.enums.Role;
 import com.IS.SINU.entities.dto.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.Random;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
     @Id
     @Column(name = "id")

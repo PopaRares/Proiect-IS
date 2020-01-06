@@ -1,7 +1,6 @@
 package com.IS.SINU.controllers.exceptionHandlers;
 
-import com.IS.SINU.exceptions.ExceptionContainer;
-import com.IS.SINU.exceptions.NoAvailableGradesException;
+import com.IS.SINU.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,11 +14,26 @@ public class GradeExceptionHandler {
     @ExceptionHandler({NoAvailableGradesException.class})
     public ResponseEntity<ExceptionContainer> handleInvalidGroupIdException(NoAvailableGradesException e) {
         ArrayList<Object> causes = new ArrayList<>();
-        if(e.getSubject() != null) causes.add(e.getSubject());
-        if(e.getType() != null) causes.add(e.getType());
-        if(e.getYear() != null) causes.add(e.getYear());
-        if(e.getSemester() != null) causes.add(e.getSemester());
+        if (e.getSubject() != null) causes.add(e.getSubject());
+        if (e.getType() != null) causes.add(e.getType());
+        if (e.getYear() != null) causes.add(e.getYear());
+        if (e.getSemester() != null) causes.add(e.getSemester());
         ExceptionContainer exception = new ExceptionContainer(e.getClass().getSimpleName(), e, causes);
         return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({GradeNotInRangeException.class, TeacherNotAuthorisedException.class, TeacherNotTeachingClassException.class})
+    public ResponseEntity<ExceptionContainer> handleInvalidGradeInputs(SINU_Exception e) {
+        ArrayList<Object> causes = new ArrayList<>();
+        switch (e.getClass().getSimpleName()) {
+            case "GradeNotInRangeException":
+                causes.add(((GradeNotInRangeException) e).getGrade());
+                break;
+            case "TeacherNotAuthorisedException":
+                causes.add(((TeacherNotAuthorisedException) e).getStudentFirstName());
+                causes.add(((TeacherNotAuthorisedException) e).getStudentLastName());
+                break;
+        }
+        return new ResponseEntity<>(new ExceptionContainer(e.getClass().getSimpleName(), e, causes), HttpStatus.BAD_REQUEST);
     }
 }
