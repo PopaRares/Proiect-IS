@@ -1,8 +1,11 @@
 package com.IS.SINU.security.jwt;
 
+import com.IS.SINU.entities.CurrentUser;
+import com.IS.SINU.entities.enums.Role;
 import com.google.common.hash.Hashing;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -74,11 +77,17 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) throws InvalidJwtAuthenticationException {
         try{
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-
             return !claims.getBody().getExpiration().before(new Date());//returns true when token is expired
 
         } catch (JwtException | IllegalArgumentException e) {
             throw new InvalidJwtAuthenticationException("Expired or invalid Jwt token");
         }
     }
+
+    public void memoriseUser(String token) {
+        Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+        CurrentUser.username = claims.getBody().get("sub").toString();
+        CurrentUser.role = Role.valueOf(claims.getBody().get("roles").toString().toUpperCase());
+    }
+
 }

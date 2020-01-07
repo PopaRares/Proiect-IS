@@ -42,7 +42,7 @@ public class AuthenticationController {
         try {
             String username = data.getUsername();
             User user = this.users.findByUsername(username);
-            String role = user.getRole();
+            String role = user.getRole().toString();
 
             if(!user.getActivated()) {
                 throw new UserNotActivatedException(user.getUsername());

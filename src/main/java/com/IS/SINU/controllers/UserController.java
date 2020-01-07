@@ -1,7 +1,10 @@
 package com.IS.SINU.controllers;
 
+import com.IS.SINU.entities.CurrentUser;
+import com.IS.SINU.entities.dao.ClassGroup;
 import com.IS.SINU.entities.dao.User;
 import com.IS.SINU.entities.dto.UserDto;
+import com.IS.SINU.entities.enums.Role;
 import com.IS.SINU.exceptions.EmailExistsException;
 import com.IS.SINU.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -22,7 +27,7 @@ public class UserController {//in progress
     private UserService service;
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map> registerUserAccount(@Valid @RequestBody UserDto regUser) throws EmailExistsException {
+    public ResponseEntity<Map<Object, Object>> registerUserAccount(@Valid @RequestBody UserDto regUser) throws EmailExistsException {
         service.registerNewUserAccount(regUser);
         return ResponseEntity.ok(Collections.singletonMap("response", "Account registered. Check your email!"));
     }
@@ -35,8 +40,30 @@ public class UserController {//in progress
     }
 
     @RequestMapping(value = "/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> getUser(@PathVariable String username) {
+    public ResponseEntity<Map<String,Object>> getUserDetails(@PathVariable String username) {
+        HashMap<String, Object> retMap = new HashMap<>();
+
         User user = service.getUser(username);
-        return ResponseEntity.ok(user);
+        if(user.getRole() == Role.PROFESSOR) {
+            retMap.put("professor", user);
+            retMap.put("teach_list", service.getTeachingList(user.getId()));
+        } else {
+            retMap.put("student", user);
+        }
+        return ResponseEntity.ok(retMap);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String,Object>> getUserDetails() {
+        HashMap<String, Object> retMap = new HashMap<>();
+
+        User user = service.getUser(CurrentUser.username);
+        if(user.getRole() == Role.PROFESSOR) {
+            retMap.put("professor", user);
+            retMap.put("teach_list", service.getTeachingList(user.getId()));
+        } else {
+            retMap.put("student", user);
+        }
+        return ResponseEntity.ok(retMap);
     }
 }

@@ -3,6 +3,7 @@ package com.IS.SINU.entities.dao;
 import com.IS.SINU.entities.enums.Role;
 import com.IS.SINU.entities.dto.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,12 +15,12 @@ import java.util.Random;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     @JsonIgnore
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long id;
 
     @Column(name = "activated")
@@ -57,10 +58,6 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long groupID;//temporary
 
-    public String getRole() {
-        return role.name();
-    }
-
     public User(UserDto u){
         this.firstName = u.getFirstName();
         this.lastName = u.getLastName();
@@ -78,6 +75,29 @@ public class User {
     private long assignGroup() {
         Random random = new Random();
         return random.nextInt(Math.toIntExact(10L));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+        if (!firstName.equals(user.firstName)) return false;
+        if (!lastName.equals(user.lastName)) return false;
+        if (!email.equals(user.email)) return false;
+        if (!username.equals(user.username)) return false;
+        return role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + username.hashCode();
+        result = 31 * result + role.hashCode();
+        return result;
     }
 }
 

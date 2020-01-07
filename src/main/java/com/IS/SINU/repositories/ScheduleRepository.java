@@ -2,6 +2,7 @@ package com.IS.SINU.repositories;
 
 import com.IS.SINU.entities.dao.ScheduleIdentity;
 import com.IS.SINU.entities.dao.ScheduleEntry;
+import com.IS.SINU.entities.dao.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

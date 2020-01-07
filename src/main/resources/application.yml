@@ -21,3 +21,4 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+    date-format: dd-MM-yyyy

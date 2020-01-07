@@ -1,5 +1,12 @@
 package com.IS.SINU.security.jwt;
 
+import com.IS.SINU.entities.CurrentUser;
+import com.IS.SINU.entities.enums.Role;
+import com.google.common.hash.Hashing;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -11,6 +18,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 
 public class JwtTokenFilter extends GenericFilterBean {
 
@@ -27,6 +36,7 @@ public class JwtTokenFilter extends GenericFilterBean {
             HttpServletRequest request = (HttpServletRequest) req;
             if (!request.getRequestURL().toString().contains("/login") && !request.getRequestURL().toString().contains("/user/registration")) {
                 String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
+                jwtTokenProvider.memoriseUser(token);
                 if (token != null && jwtTokenProvider.getAuthentication(token) != null) {
                     Authentication auth = jwtTokenProvider.getAuthentication(token);
 
@@ -43,4 +53,6 @@ public class JwtTokenFilter extends GenericFilterBean {
             response.getWriter().print("Forbidden!");
         }
     }
+
+
 }
