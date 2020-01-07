@@ -9,7 +9,7 @@ import java.util.List;
 public interface FinalGradeService {
 
     List<FinalGrade> listAll();
-    FinalGrade calculateFinalGrade(Subject subject);
+    List<FinalGrade> calculateFinalGrade(Subject subject);
     Float calculateSemesterAvg(Integer year, Semester semester);
     Float calculateYearAvg(Integer year);
 }
