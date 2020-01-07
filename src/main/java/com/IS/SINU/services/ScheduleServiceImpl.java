@@ -7,7 +7,7 @@ import com.IS.SINU.entities.dto.Request;
 import com.IS.SINU.entities.enums.Role;
 import com.IS.SINU.exceptions.InvalidGroupIdException;
 import com.IS.SINU.exceptions.NonexistentUserException;
-import com.IS.SINU.exceptions.UserIsNotATeacherException;
+import com.IS.SINU.exceptions.UserIsNotRightRoleException;
 import com.IS.SINU.repositories.GroupRepository;
 import com.IS.SINU.repositories.ScheduleRepository;
 import com.IS.SINU.repositories.UserRepository;
@@ -42,12 +42,12 @@ public class ScheduleServiceImpl implements ScheduleService {
         if(request.getRole().equalsIgnoreCase(Role.PROFESSOR.toString())) {
             List<ScheduleEntry> timetable = repository.findByTeacher(request.getUsername());
             if(timetable.isEmpty() || timetable.get(0) == null) {
-                throw new UserIsNotATeacherException(request.getUsername());
+                throw new UserIsNotRightRoleException(request.getUsername());
             } else {
                 return timetable;
             }
         } else {
-            throw new UserIsNotATeacherException(request.getUsername());
+            throw new UserIsNotRightRoleException(request.getUsername());
         }
     }
 
@@ -57,7 +57,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         if(teacher != null && teacher.getRole().equals(Role.PROFESSOR.toString())) {
             return repository.findByTeacher(username);
         } else {
-            throw new UserIsNotATeacherException(username);
+            throw new UserIsNotRightRoleException(username);
         }
     }
 

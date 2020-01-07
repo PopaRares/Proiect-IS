@@ -48,8 +48,8 @@ public class UserExceptionHandler {
         return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({UserIsNotATeacherException.class})
-    public ResponseEntity<ExceptionContainer> handleUserIsNotTeacherException(UserIsNotATeacherException e) {
+    @ExceptionHandler({UserIsNotRightRoleException.class})
+    public ResponseEntity<ExceptionContainer> handleUserIsNotTeacherException(UserIsNotRightRoleException e) {
         ExceptionContainer exception = new ExceptionContainer(e.getClass().getSimpleName(), e, Collections.singletonList(e.getUsername()));
         return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
     }
