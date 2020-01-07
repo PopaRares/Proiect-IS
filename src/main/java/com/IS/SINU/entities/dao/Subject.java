@@ -17,7 +17,6 @@ public class Subject {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY )
-    @JsonIgnore
     private Long id;
 
     @Column(name = "name")
