@@ -27,8 +27,8 @@ public class FinalGradeController {
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<FinalGrade> calculateFinalGrade(@RequestBody Subject subject) {
-        FinalGrade finalGrade = service.calculateFinalGrade(subject);
-        return ResponseEntity.ok(finalGrade);
+    public ResponseEntity<List<FinalGrade>> calculateFinalGrade(@RequestBody Subject subject) {
+        List<FinalGrade> finalGrades = service.calculateFinalGrade(subject);
+        return ResponseEntity.ok(finalGrades);
     }
 }
