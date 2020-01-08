@@ -4,6 +4,7 @@ import com.IS.SINU.entities.dao.Group;
 import com.IS.SINU.entities.dao.Teaching;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,5 +22,4 @@ public class ScheduleIdentity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "group")
     private Group group;
-
 }
