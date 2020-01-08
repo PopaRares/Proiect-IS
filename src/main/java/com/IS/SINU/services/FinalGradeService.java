@@ -10,6 +10,5 @@ public interface FinalGradeService {
 
     List<FinalGrade> listAll();
     List<FinalGrade> calculateFinalGrade(Subject subject);
-    Float calculateSemesterAvg(Integer year, Semester semester);
-    Float calculateYearAvg(Integer year);
+    Float calculateAvg(String username, Integer year, String semester);
 }

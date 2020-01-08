@@ -69,12 +69,8 @@ public class FinalGradeServiceImpl implements FinalGradeService {
     }
 
     @Override
-    public Float calculateSemesterAvg(Integer year, Semester semester) {
-        return null;
+    public Float calculateAvg(String username, Integer year, String semester) {
+        return repository.getAvg(CurrentUser.username, year, semester);
     }
 
-    @Override
-    public Float calculateYearAvg(Integer year) {
-        return null;
-    }
 }
