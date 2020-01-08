@@ -74,7 +74,7 @@ public class User {
 
     private long assignGroup() {
         Random random = new Random();
-        return random.nextInt(Math.toIntExact(10L));
+        return random.nextInt(Math.toIntExact(9L) + 1);
     }
 
     @Override
