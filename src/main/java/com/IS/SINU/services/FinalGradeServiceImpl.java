@@ -48,6 +48,7 @@ public class FinalGradeServiceImpl implements FinalGradeService {
         return studentList.stream()
                 .distinct()
                 .map(S -> {
+
                     FinalGrade grade = new FinalGrade();
                     grade.setDate(new Date());
                     grade.setStudentId(S.getId());
@@ -55,11 +56,15 @@ public class FinalGradeServiceImpl implements FinalGradeService {
                     grade.setSubjectId(subject.getId());
                     grade.setSubject(subject);
 
-                    Float courseAvg = gradeRepository.getAvg(subject, SubjectType.COURSE.name(), S);
-                    Float labAvg = gradeRepository.getAvg(subject, SubjectType.LABORATORY.name(), S);
-                    Float semAvg = gradeRepository.getAvg(subject, SubjectType.SEMINAR.name(), S);
+                    Float courseAvg = gradeRepository.getAvg(subject, SubjectType.COURSE, S);
+                    Float labAvg = gradeRepository.getAvg(subject, SubjectType.LABORATORY, S);
+                    Float semAvg = gradeRepository.getAvg(subject, SubjectType.SEMINAR, S);
 
-                    float finalValue =  courseAvg * subject.getCourse_weight() +
+                    if(courseAvg == null) courseAvg = 0F;
+                    if(labAvg == null) labAvg = 0F;
+                    if(semAvg == null) semAvg = 0F;
+
+                    Float finalValue =  courseAvg * subject.getCourse_weight() +
                                         labAvg * subject.getLab_weight() +
                                         semAvg * subject.getSeminar_weight();
                     grade.setGrade(finalValue/100);
