@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/SINU
-    username: root
-    password: Up2nogood
+    username: sinu
+    password: 12345678
   jpa:
     show-sql: true
   flyway:
