@@ -7,7 +7,7 @@ import com.IS.SINU.entities.dto.Request;
 import com.IS.SINU.entities.enums.Role;
 import com.IS.SINU.exceptions.InvalidGroupIdException;
 import com.IS.SINU.exceptions.NonexistentUserException;
-import com.IS.SINU.exceptions.UserIsNotRightRoleException;
+import com.IS.SINU.exceptions.UserWrongRoleException;
 import com.IS.SINU.repositories.GroupRepository;
 import com.IS.SINU.repositories.ScheduleRepository;
 import com.IS.SINU.repositories.UserRepository;
@@ -42,22 +42,22 @@ public class ScheduleServiceImpl implements ScheduleService {
         if(request.getRole().equalsIgnoreCase(Role.PROFESSOR.toString())) {
             List<ScheduleEntry> timetable = repository.findByTeacher(request.getUsername());
             if(timetable.isEmpty() || timetable.get(0) == null) {
-                throw new UserIsNotRightRoleException(request.getUsername(), Role.PROFESSOR);
+                throw new UserWrongRoleException(request.getUsername(), Role.PROFESSOR);
             } else {
                 return timetable;
             }
         } else {
-            throw new UserIsNotRightRoleException(request.getUsername(), Role.PROFESSOR);
+            throw new UserWrongRoleException(request.getUsername(), Role.PROFESSOR);
         }
     }
 
     @Override
     public List<ScheduleEntry> getTeacherSchedule(String username) {
         User teacher = userRepository.findByUsername(username);
-        if(teacher != null && teacher.getRole().equals(Role.PROFESSOR)) {
+        if(teacher != null && teacher.getRole() == Role.PROFESSOR) {
             return repository.findByTeacher(username);
         } else {
-            throw new UserIsNotRightRoleException(username, Role.PROFESSOR);
+            throw new UserWrongRoleException(username, Role.PROFESSOR);
         }
     }
 
@@ -67,12 +67,12 @@ public class ScheduleServiceImpl implements ScheduleService {
             Group group = groupRepository.findByUsername(request.getUsername());
             List<ScheduleEntry> timetable = repository.findByGroupId(group.getId());
             if(timetable.isEmpty() || timetable.get(0) == null) {
-                throw new NonexistentUserException(request.getUsername());
+                throw new NonexistentUserException(request.getUsername(), Role.STUDENT.name());
             } else {
                 return timetable;
             }
         } else {
-            throw new NonexistentUserException(request.getUsername());
+            throw new NonexistentUserException(request.getUsername(), Role.STUDENT.name());
         }
     }
 
@@ -80,10 +80,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     public List<ScheduleEntry> getStudentSchedule(String username) {
         User student = userRepository.findByUsername(username);
         Group group = groupRepository.findByUsername(username);
-        if(student != null && student.getRole().equals(Role.STUDENT)) {
+        if(student != null && student.getRole() == Role.STUDENT) {
             return repository.findByGroupId(group.getId());
         } else {
-            throw new NonexistentUserException(username);
+            throw new NonexistentUserException(username, Role.STUDENT.name());
         }
     }
 }
