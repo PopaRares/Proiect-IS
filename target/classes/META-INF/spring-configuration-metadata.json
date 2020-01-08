@@ -1,0 +1,44 @@
+{
+  "groups": [
+    {
+      "name": "jwt",
+      "type": "com.IS.SINU.security.jwt.JwtProperties",
+      "sourceType": "com.IS.SINU.security.jwt.JwtProperties"
+    },
+    {
+      "name": "spring.datasource",
+      "type": "com.IS.SINU.configuration.DatabaseConfig",
+      "sourceType": "com.IS.SINU.configuration.DatabaseConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "jwt.password",
+      "type": "java.lang.String",
+      "sourceType": "com.IS.SINU.security.jwt.JwtProperties",
+      "defaultValue": "secret10"
+    },
+    {
+      "name": "jwt.validity-in-ms",
+      "type": "java.lang.Long",
+      "sourceType": "com.IS.SINU.security.jwt.JwtProperties",
+      "defaultValue": 3600000
+    },
+    {
+      "name": "spring.datasource.password",
+      "type": "java.lang.String",
+      "sourceType": "com.IS.SINU.configuration.DatabaseConfig"
+    },
+    {
+      "name": "spring.datasource.url",
+      "type": "java.lang.String",
+      "sourceType": "com.IS.SINU.configuration.DatabaseConfig"
+    },
+    {
+      "name": "spring.datasource.username",
+      "type": "java.lang.String",
+      "sourceType": "com.IS.SINU.configuration.DatabaseConfig"
+    }
+  ],
+  "hints": []
+}
