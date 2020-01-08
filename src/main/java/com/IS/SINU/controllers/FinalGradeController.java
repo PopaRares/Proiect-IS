@@ -6,12 +6,10 @@ import com.IS.SINU.services.FinalGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -30,5 +28,11 @@ public class FinalGradeController {
     public ResponseEntity<List<FinalGrade>> calculateFinalGrade(@RequestBody Subject subject) {
         List<FinalGrade> finalGrades = service.calculateFinalGrade(subject);
         return ResponseEntity.ok(finalGrades);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Float>> getFinal(@RequestParam(required = false) String semester, @RequestParam Integer year) {
+        System.out.println("lol");
+        return null;
     }
 }

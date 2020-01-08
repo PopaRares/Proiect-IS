@@ -61,7 +61,7 @@ public class GradeServiceImpl implements GradeService {
             throw new GradeNotInRangeException(gradeDto.getGrade());
         }
         if(CurrentUser.role != Role.PROFESSOR) {
-           throw new UserIsNotRightRoleException(CurrentUser.username);
+           throw new UserIsNotRightRoleException(CurrentUser.username, Role.PROFESSOR);
         }
         Teaching teaching = teachingRepository.getTeaching(CurrentUser.username, gradeDto.getClassId());
         if(teaching == null) {

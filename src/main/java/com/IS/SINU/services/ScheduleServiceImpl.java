@@ -42,22 +42,22 @@ public class ScheduleServiceImpl implements ScheduleService {
         if(request.getRole().equalsIgnoreCase(Role.PROFESSOR.toString())) {
             List<ScheduleEntry> timetable = repository.findByTeacher(request.getUsername());
             if(timetable.isEmpty() || timetable.get(0) == null) {
-                throw new UserIsNotRightRoleException(request.getUsername());
+                throw new UserIsNotRightRoleException(request.getUsername(), Role.PROFESSOR);
             } else {
                 return timetable;
             }
         } else {
-            throw new UserIsNotRightRoleException(request.getUsername());
+            throw new UserIsNotRightRoleException(request.getUsername(), Role.PROFESSOR);
         }
     }
 
     @Override
     public List<ScheduleEntry> getTeacherSchedule(String username) {
         User teacher = userRepository.findByUsername(username);
-        if(teacher != null && teacher.getRole().equals(Role.PROFESSOR.toString())) {
+        if(teacher != null && teacher.getRole().equals(Role.PROFESSOR)) {
             return repository.findByTeacher(username);
         } else {
-            throw new UserIsNotRightRoleException(username);
+            throw new UserIsNotRightRoleException(username, Role.PROFESSOR);
         }
     }
 
@@ -80,7 +80,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     public List<ScheduleEntry> getStudentSchedule(String username) {
         User student = userRepository.findByUsername(username);
         Group group = groupRepository.findByUsername(username);
-        if(student != null && student.getRole().equals(Role.STUDENT.toString())) {
+        if(student != null && student.getRole().equals(Role.STUDENT)) {
             return repository.findByGroupId(group.getId());
         } else {
             throw new NonexistentUserException(username);
