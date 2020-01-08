@@ -79,7 +79,6 @@ public class GradeServiceImpl implements GradeService {
             throw new TeacherNotAuthorisedException(student.getFirstName(), student.getLastName());
         }
         Grade G = new Grade(teaching, gradeDto, student);
-        System.out.println(G);
         repository.save(G);
         return G;
     }

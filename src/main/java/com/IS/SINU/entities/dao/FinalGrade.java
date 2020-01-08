@@ -14,7 +14,6 @@ public class FinalGrade {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY )
-    @JsonIgnore
     private Long id;
 
     @Column(name = "grade")
@@ -25,11 +24,17 @@ public class FinalGrade {
     private Date date;
 
     @ManyToOne
-    @JoinColumn(name = "subject_id")
+    @JoinColumn(name = "subject_id", insertable = false, updatable = false)
     private Subject subject;
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "student_id", insertable = false, updatable = false)
     private User student;
+
+    @Column(name = "subject_id")
+    private Long subjectId;
+
+    @Column(name = "student_id")
+    private Long studentId;
 
 }
