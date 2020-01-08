@@ -1,4 +1,4 @@
-package validators;
+package com.IS.SINU.security.validators;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

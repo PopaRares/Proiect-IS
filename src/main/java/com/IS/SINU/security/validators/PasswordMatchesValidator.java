@@ -1,4 +1,4 @@
-package validators;
+package com.IS.SINU.security.validators;
 
 import com.IS.SINU.entities.dto.UserDto;
 

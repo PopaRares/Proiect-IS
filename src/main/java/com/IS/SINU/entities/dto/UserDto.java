@@ -1,8 +1,8 @@
 package com.IS.SINU.entities.dto;
 
 import lombok.Data;
-import validators.PasswordMatches;
-import validators.ValidEmail;
+import com.IS.SINU.security.validators.PasswordMatches;
+import com.IS.SINU.security.validators.ValidEmail;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
