@@ -17,8 +17,8 @@ public class GroupController {
     private GroupService service;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Group> getGroup(@RequestBody Request request) {
-        Group group = service.getGroupByUsername(request.getUsername());
+    public ResponseEntity<Group> getGroup() {
+        Group group = service.getGroup();
         return ResponseEntity.ok(group);
     }
 

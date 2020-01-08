@@ -7,7 +7,7 @@ import com.IS.SINU.entities.dto.Request;
 import com.IS.SINU.entities.enums.Role;
 import com.IS.SINU.exceptions.InvalidGroupIdException;
 import com.IS.SINU.exceptions.NonexistentUserException;
-import com.IS.SINU.exceptions.UserIsNotATeacherException;
+import com.IS.SINU.exceptions.UserWrongRoleException;
 import com.IS.SINU.repositories.GroupRepository;
 import com.IS.SINU.repositories.ScheduleRepository;
 import com.IS.SINU.repositories.UserRepository;
@@ -42,22 +42,22 @@ public class ScheduleServiceImpl implements ScheduleService {
         if(request.getRole().equalsIgnoreCase(Role.PROFESSOR.toString())) {
             List<ScheduleEntry> timetable = repository.findByTeacher(request.getUsername());
             if(timetable.isEmpty() || timetable.get(0) == null) {
-                throw new UserIsNotATeacherException(request.getUsername());
+                throw new UserWrongRoleException(request.getUsername(), Role.PROFESSOR);
             } else {
                 return timetable;
             }
         } else {
-            throw new UserIsNotATeacherException(request.getUsername());
+            throw new UserWrongRoleException(request.getUsername(), Role.PROFESSOR);
         }
     }
 
     @Override
     public List<ScheduleEntry> getTeacherSchedule(String username) {
         User teacher = userRepository.findByUsername(username);
-        if(teacher != null && teacher.getRole().equals(Role.PROFESSOR.toString())) {
+        if(teacher != null && teacher.getRole() == Role.PROFESSOR) {
             return repository.findByTeacher(username);
         } else {
-            throw new UserIsNotATeacherException(username);
+            throw new UserWrongRoleException(username, Role.PROFESSOR);
         }
     }
 
@@ -80,7 +80,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     public List<ScheduleEntry> getStudentSchedule(String username) {
         User student = userRepository.findByUsername(username);
         Group group = groupRepository.findByUsername(username);
-        if(student != null && student.getRole().equals(Role.STUDENT.toString())) {
+        if(student != null && student.getRole() == Role.STUDENT) {
             return repository.findByGroupId(group.getId());
         } else {
             throw new NonexistentUserException(username);
