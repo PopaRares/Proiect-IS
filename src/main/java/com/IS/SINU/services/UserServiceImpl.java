@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService{
         String token = ActivationToken.generate();
         user.setActivationToken(token);
         repository.save(user);
-
+        System.out.println("Saved " + user);
         sendActivationEmail(user.getEmail(), token);
 
         return user;
@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService{
         email.setTo(recipientAddress);
         email.setSubject("SINU Account Activation");
         email.setText("http://localhost:8080/user/activate/" + token);
+        System.out.println("Ready to send email!");
         mailSender.send(email);
     }
 
@@ -89,15 +90,14 @@ public class UserServiceImpl implements UserService{
     public User getUser(String username) {
         User user = repository.findByUsername(username);
         if(user == null) {
-            throw new NonexistentUserException(username);
+            throw new NonexistentUserException(username, "user");
         }
         return user;
     }
 
     @Override
     public List<ClassGroup> getTeachingList(Long id) {
-        List<ClassGroup> classGroups = repository.getClassGroupList(id);
-        return classGroups;
+        return repository.getClassGroupList(id);
     }
 
 }
