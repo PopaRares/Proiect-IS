@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -33,7 +34,8 @@ public class FinalGradeController {
 
     @RequestMapping(value = {"{username}/{year}", "{username}/{year}/{semester}"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Float>> getFinal(@PathVariable String username, @PathVariable Integer year, @PathVariable(required = false) String semester) {
-        HashMap<String, Float> map =  new HashMap<>().put("average", service.calculateAvg(username, year, semester))
+        HashMap<String, Float> map =  new HashMap<>();
+        map.put("average", service.calculateAvg(username, year, semester));
         return ResponseEntity.ok(map);
     }
 }
