@@ -87,21 +87,10 @@ INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (
 INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (2 , 10, 'TUESDAY', '12:00:00', 'BOTH', '103');
 INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (5 , 10, 'TUESDAY', '14:00:00', 'BOTH', '105');
 INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (8 , 10, 'TUESDAY', '16:00:00', 'BOTH', '107');
-INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (12 , 7, 'TUESDAY', '10:00:00', 'ODD', '107');
-INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (14 , 7, 'TUESDAY', '12:00:00', 'BOTH', '107');
 INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (3 , 9, 'WEDNESDAY', '08:00:00', 'EVEN', '36');
 INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (6 , 9, 'WEDNESDAY', '10:00:00', 'EVEN', '26b');
 INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (3 , 10, 'WEDNESDAY', '08:00:00', 'ODD', '36');
 INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (6 , 10, 'WEDNESDAY', '10:00:00', 'ODD', '26b');
-INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (9 , 10, 'THURSDAY', '08:00:00', 'BOTH', 'D21');
-INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (11 , 10, 'THURSDAY', '10:00:00', 'BOTH', 'D21');
-INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (13 , 10, 'THURSDAY', '12:00:00', 'BOTH', 'D21');
-INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (9 , 9, 'THURSDAY', '08:00:00', 'BOTH', 'D21');
-INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (11 , 9, 'THURSDAY', '10:00:00', 'BOTH', 'D21');
-INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (13 , 9, 'THURSDAY', '12:00:00', 'BOTH', 'D21');
-INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (9 , 7, 'THURSDAY', '08:00:00', 'BOTH', 'D21');
-INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (11 , 7, 'THURSDAY', '10:00:00', 'BOTH', 'D21');
-INSERT into schedule(teaching_id, `group`, day, time, parity, location) VALUES (13 , 7, 'THURSDAY', '12:00:00', 'BOTH', 'D21');
 
 
 SET foreign_key_checks = 1;
