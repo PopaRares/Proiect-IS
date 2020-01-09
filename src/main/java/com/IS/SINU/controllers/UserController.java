@@ -32,7 +32,7 @@ public class UserController {//in progress
         return ResponseEntity.ok(Collections.singletonMap("response", "Account registered. Check your email!"));
     }
 
-    @RequestMapping(value = "/activate/{token}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/activate/{token}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> activateAccount(@PathVariable String token) {
         System.out.println(token);
         User user = service.activateAccount(token);
