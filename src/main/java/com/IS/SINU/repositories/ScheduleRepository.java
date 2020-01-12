@@ -15,4 +15,6 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntry, Schedul
     @Query("from ScheduleEntry S where S.scheduleId.teaching.professor.username = ?1")
     List<ScheduleEntry> findByTeacher(String username);
 
+//    @Query(value = "insert into schedule(teaching_id, `group`, day, `time`, parity, location) values(?1, 10, 'THURSDAY', '08:00:00', 'BOTH', 'Pe Barițiu acolo în stânga, înainte de scări')", nativeQuery = true)
+//    void makeTufisiOurTeacher(Long tufisiTeachId);
 }

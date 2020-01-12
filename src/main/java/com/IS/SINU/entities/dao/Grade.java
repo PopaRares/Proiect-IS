@@ -3,6 +3,7 @@ package com.IS.SINU.entities.dao;
 import com.IS.SINU.entities.dto.GradeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Date;
 @Entity
 @Table(name = "grades")
 @Data
+@NoArgsConstructor
 public class Grade {
 
     @Id

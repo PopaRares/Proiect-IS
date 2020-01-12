@@ -67,12 +67,12 @@ public class ScheduleServiceImpl implements ScheduleService {
             Group group = groupRepository.findByUsername(request.getUsername());
             List<ScheduleEntry> timetable = repository.findByGroupId(group.getId());
             if(timetable.isEmpty() || timetable.get(0) == null) {
-                throw new NonexistentUserException(request.getUsername());
+                throw new NonexistentUserException(request.getUsername(), Role.STUDENT.name());
             } else {
                 return timetable;
             }
         } else {
-            throw new NonexistentUserException(request.getUsername());
+            throw new NonexistentUserException(request.getUsername(), Role.STUDENT.name());
         }
     }
 
@@ -83,7 +83,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         if(student != null && student.getRole() == Role.STUDENT) {
             return repository.findByGroupId(group.getId());
         } else {
-            throw new NonexistentUserException(username);
+            throw new NonexistentUserException(username, Role.STUDENT.name());
         }
     }
 }

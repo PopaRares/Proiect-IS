@@ -39,12 +39,13 @@ public class GradeServiceImpl implements GradeService {
             if(semester != null) {
                 semester = semester.toUpperCase();
             }
+            System.out.println("am ajuns aici");
             grades = repository.findDescriptive(CurrentUser.username, subject, type, year, semester);
         }
         if(CurrentUser.role == Role.PROFESSOR) {
             grades = repository.findByTeacher(CurrentUser.username);
         }
-        if(grades.isEmpty()) {
+        if(grades == null || grades.isEmpty()) {
             throw new NoAvailableGradesException(subject, type, year, semester);
         }
         return grades;
@@ -79,7 +80,6 @@ public class GradeServiceImpl implements GradeService {
             throw new TeacherNotAuthorisedException(student.getFirstName(), student.getLastName());
         }
         Grade G = new Grade(teaching, gradeDto, student);
-        System.out.println(G);
         repository.save(G);
         return G;
     }

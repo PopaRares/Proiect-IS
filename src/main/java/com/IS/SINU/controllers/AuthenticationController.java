@@ -62,6 +62,7 @@ public class AuthenticationController {
             throw e;
         }
         catch (Exception e){
+            System.out.println(e);
             return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
     }

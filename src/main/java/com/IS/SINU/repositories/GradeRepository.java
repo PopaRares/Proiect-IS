@@ -1,8 +1,9 @@
 package com.IS.SINU.repositories;
 
 import com.IS.SINU.entities.dao.Grade;
-import com.IS.SINU.entities.dao.Teaching;
-import com.IS.SINU.entities.enums.Semester;
+import com.IS.SINU.entities.dao.Subject;
+import com.IS.SINU.entities.dao.User;
+import com.IS.SINU.entities.enums.SubjectType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,4 +16,8 @@ public interface GradeRepository extends JpaRepository<Grade, Long> {
 
     @Query("from Grade G where G.teaching.professor.username = ?1 order by G.date, G.student.lastName, G.student.firstName")
     List<Grade> findByTeacher(String username);
+
+    @Query("select avg(G.grade) from Grade G where G.teaching.class_name.subject = ?1 and G.teaching.class_name.type = ?2 and G.student = ?3")
+    Float getAvg(Subject subject, SubjectType type, User student);
+
 }
